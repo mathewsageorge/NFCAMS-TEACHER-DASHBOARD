@@ -154,78 +154,84 @@
       </div>
    
    <!-- Attendance content -->
-<section class="attendance" style="display:none;">
-  <button onclick="refreshPage()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
+   <section class="attendance" style="display:none;">
+    <!-- Add the refresh icon -->
+    <button onclick="refreshPage()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
 
-  <div class="attendance-list">
-    <h1>Attendance List of Students</h1>
-    <br>
-    <p>Total Present: <span id="totalPresentCount" class="total-present-count">0</span></p>
-    <br>
-    <!-- Button to select date -->
-    <label for="attendanceDate">Select Date: </label>
-    <input type="date" id="attendanceDate">
-    <!-- Enhanced select input for subject with modern styling -->
-    <div class="select-container">
-      <label for="attendanceSubject" class="select-label">Select Subject:</label>
-      <select id="attendanceSubject" class="select-styled">
-        <option value="">All Subjects</option>
-        <% subjects.forEach(subject => { %>
-            <option value="<%= subject %>"><%= subject %></option>
-        <% }); %>
-      </select>
-    </div>
+   <div class="attendance-list">
+       <h1>Attendance List of Students</h1>
+       <br>
+       <p>Total Present: <span id="totalPresentCount" class="total-present-count">0</span></p>
+       <br>
+       <!-- Button to select date -->
+       <label for="attendanceDate">Select Date: </label>
+       <input type="date" id="attendanceDate">
+       <!-- Enhanced select input for subject with modern styling -->
+<div class="select-container">
+ <label for="attendanceSubject" class="select-label">Select Subject:</label>
+ <select id="attendanceSubject" class="select-styled">
+     <option value="">All Subjects</option>
+     <% subjects.forEach(subject => { %>
+         <option value="<%= subject %>"><%= subject %></option>
+     <% }); %>
+ </select>
+</div>
 
-    <!-- Enhanced select input for period with modern styling -->
-    <div class="select-container">
-      <label for="attendancePeriod" class="select-label">Select Period:</label>
-      <select id="attendancePeriod" class="select-styled">
-        <option value="">All Periods</option>
-        <option value="Period 1">Period 1</option>
-        <option value="Period 2">Period 2</option>
-        <option value="Period 3">Period 3</option>
-        <option value="Period 4">Period 4</option>
-        <option value="Period 5">Period 5</option>
-        <option value="Period 6">Period 6</option>
-      </select>
-    </div>
+<!-- Enhanced select input for period with modern styling -->
+<div class="select-container">
+ <label for="attendancePeriod" class="select-label">Select Period:</label>
+ <select id="attendancePeriod" class="select-styled">
+     <option value="">All Periods</option>
+     <option value="Period 1">Period 1</option>
+     <option value="Period 2">Period 2</option>
+     <option value="Period 3">Period 3</option>
+     <option value="Period 4">Period 4</option>
+     <option value="Period 5">Period 5</option>
+     <option value="Period 6">Period 6</option>
+     <!-- Add more options for other periods as needed -->
+ </select>
+</div>
 
-    <button onclick="displayAttendanceByDateAndSubjectandPeriod()" class="secondary-button">Display Attendance</button>
+       <button onclick="displayAttendanceByDateAndSubjectandPeriod()" class="secondary-button">Display Attendance</button>
 
-    <table id="attendanceTable" class="table">
-      <thead>
-        <tr>
-          <th>SL No</th> <!-- Added Serial No column -->
-          <th>Date</th>
-          <th>Time</th>
-          <th>Student Name</th>
-          <th>Subject-Class</th>
-          <th>Period</th>
-          <!-- <th>Message</th> -->
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% attendanceData.forEach((data, index) => { %>
-            <tr>
-                <td><%= index + 1 %></td> <!-- Displaying serial number -->
-                <td><%= data.time.toDateString() %></td>
-                <td><%= data.time.toLocaleTimeString() %></td>
-                <td><%= data.studentName %></td>
-                <td><%= data.subject %></td>
-                <td><%= data.period %></td>
-                <!-- <td> -->
-                  <!-- <button onclick="sendMessage('<%= data.studentName %>')" class="message-btn"><i class="fas fa-envelope"></i></button> -->
-                <!-- </td> -->
-                <td>
-                  <button onclick="deleteAttendance('<%= data._id %>', '<%= username %>')">Delete</button>
-                </td>
-            </tr>
-        <% }); %>
-      </tbody>
-    </table>
-  </div>
-</section>
+       <table id="attendanceTable" class="table">
+         <thead>
+           <tr>
+             <th  style="position: relative;">Date </th>
+             <th  style="position: relative;">Time </th>
+             <th  style="position: relative;">Student Name</th>
+             <th  style="position: relative;">Subject</th>
+             <th  style="position: relative;">Period</th>
+             <th  style="position: relative;">Message </th>
+             <th  style="position: relative;">Delete </th>
+           </tr>
+         </thead>
+         <tbody>
+           <% attendanceData.forEach(data => { %>
+               <tr>
+                   <!-- Displaying date -->
+                   <td><%= data.time.toDateString() %></td>
+                   <!-- Displaying time -->
+                   <td><%= data.time.toLocaleTimeString() %></td>
+                   <td><%= data.studentName %></td>
+                   <td><%= data.subject %></td>
+                   <td><%= data.period %></td>
+                  
+                   <td>
+                     <!-- Message icon for each student -->
+                     <button onclick="sendMessage('<%= data.studentName %>')" class="message-btn"><i class="fas fa-envelope"></i></button>
+                   </td>
+                   <td>
+                    <!-- Ensure the button in your HTML correctly passes the ID -->
+<button onclick="deleteAttendance('<%= data._id %>', '<%= username %>')">Delete</button>
+                 </td>
+                  
+               </tr>
+           <% }); %>
+         </tbody>
+       </table>
+     </div>
+   </section>
 
     <section class="report" style="display:none;">
       <!-- Report content -->
