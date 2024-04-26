@@ -769,3 +769,83 @@ table thead tr{
   text-decoration: none;
   cursor: pointer;
 }
+
+.low-attendance-container {
+  width: calc(50% - 10px); /* Set the width of each card to occupy half the container width with some margin */
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+/* background-image: url('/images/DCD.png'); Add the background image */
+  background-size: cover; /* Cover the entire background */
+  background-position: center; /* Center the background image */
+  height: 550px;
+  
+}
+
+.section-title {
+  color: #333;
+  text-align: left;
+  margin-bottom: 20px;
+
+}
+
+.low-attendance-list {
+  margin-top: 10px;
+}
+
+.subject-container {
+  margin-bottom: 20px;
+}
+
+.subject-title {
+  font-size: 18px;
+  color: #007bff; /* Bootstrap primary color */
+  margin-bottom: 10px;
+}
+
+.student-entry {
+  padding: 5px 10px;
+  
+  border-left: 5px solid #dc3545; /* Bootstrap danger color */
+  margin-bottom: 5px;
+}
+
+.announcements-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.low-attendance-container, .notification-card {
+  flex: 1; /* Each takes equal width */
+  margin: 10px;
+  padding: 20px;
+  background-color: #f9f9f9; /* Light grey background */
+  border: 1px solid #ccc; /* Grey border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+}
+
+.section-title {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.notification-list, .low-attendance-list {
+  list-style: none;
+  padding: 0;
+}
+
+.notification-list li, .low-attendance-list li {
+  padding: 10px;
+  border-bottom: 1px solid #eee; /* Light line between items */
+}
+
+.notification-list li:last-child, .low-attendance-list li:last-child {
+  border-bottom: none; /* No border at the bottom of the last item */
+}
+

@@ -523,6 +523,118 @@ app.get('/generate-attendance-percentage-pdf', async (req, res) => {
     }
 });
 
+
+
+
+app.post('/export-attendance-to-pdf', async (req, res) => {
+    const { attendanceData } = req.body;
+
+    if (!attendanceData || attendanceData.length === 0) {
+        return res.status(400).send('No data provided for PDF generation');
+    }
+
+    try {
+        const doc = new PDFDocument();
+        res.setHeader('Content-disposition', 'attachment; filename="attendance_report.pdf"');
+        res.setHeader('Content-type', 'application/pdf');
+        doc.pipe(res);
+
+        doc.fontSize(16).text(' Custom Attendance Report', { align: 'center' }).moveDown();
+        doc.fontSize(12);
+
+        // Define table headers and adjust column widths
+        const headers = ["Date", "Time", "Student Name", "Subject", "Period"];
+        const columnWidths = [100, 80, 150, 100, 60]; // Adjusted widths to better fit content
+
+        const startY = doc.y;
+        const startX = doc.x;
+
+        // Draw headers
+        headers.forEach((header, i) => {
+            doc.text(header, startX + sumPreviousWidths(i, columnWidths), startY, { width: columnWidths[i], align: 'center' });
+        });
+
+        // Move to next row
+        doc.moveDown(1.5);
+
+        // Draw rows
+        attendanceData.forEach(data => {
+            let currentY = doc.y;
+            doc.text(data.date, startX, currentY, { width: columnWidths[0] });
+            doc.text(data.time, startX + columnWidths[0], currentY, { width: columnWidths[1] });
+            doc.text(data.studentName, startX + columnWidths[0] + columnWidths[1], currentY, { width: columnWidths[2] });
+            doc.text(data.subject, startX + columnWidths[0] + columnWidths[1] + columnWidths[2], currentY, { width: columnWidths[3] });
+            doc.text(data.period, startX + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3], currentY, { width: columnWidths[4] });
+            doc.moveDown();
+        });
+
+        doc.end();
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        res.status(500).send('Failed to generate PDF');
+    }
+});
+
+function sumPreviousWidths(index, widths) {
+    let sum = 0;
+    for (let i = 0; i < index; i++) {
+        sum += widths[i];
+    }
+    return sum;
+}
+
+app.get('/students-low-attendance', async (req, res) => {
+    const { username } = req.query;
+
+    if (!username) {
+        return res.status(400).json({ error: 'Username is required' });
+    }
+
+    const user = users[username];
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    try {
+        const Attendance = mongoose.model('Attendance', attendanceSchema, user.collection);
+        const TotalClasses = mongoose.model('TotalClasses', totalClassesSchema, 'total_classes');
+        const subjects = await Attendance.distinct('subject');
+        let lowAttendanceStudents = [];
+
+        for (let subject of subjects) {
+            const totalClassesData = await TotalClasses.findOne({ subject: subject });
+            if (!totalClassesData) {
+                console.log(`No total classes data found for subject: ${subject}`);
+                continue; // Skip if no total classes data found for the subject
+            }
+            const totalClasses = totalClassesData.count;
+            const attendanceRecords = await Attendance.find({ subject: subject });
+
+            let attendanceCounts = {};
+            attendanceRecords.forEach(record => {
+                const studentName = mapSerialToStudentName(record.serialNumber);
+                if (attendanceCounts[studentName]) {
+                    attendanceCounts[studentName] += 1;
+                } else {
+                    attendanceCounts[studentName] = 1;
+                }
+            });
+
+            for (let studentName in attendanceCounts) {
+                let percentage = (attendanceCounts[studentName] / totalClasses) * 100;
+                if (percentage < 75) {
+                    lowAttendanceStudents.push({ studentName, subject, percentage: percentage.toFixed(2) });
+                }
+            }
+        }
+
+        res.json(lowAttendanceStudents);
+    } catch (error) {
+        console.error('Error fetching low attendance students:', error);
+        res.status(500).json({ error: 'Failed to fetch low attendance students' });
+    }
+});
+
 // Start server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
