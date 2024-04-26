@@ -539,7 +539,7 @@ app.post('/export-attendance-to-pdf', async (req, res) => {
         res.setHeader('Content-type', 'application/pdf');
         doc.pipe(res);
 
-        doc.fontSize(16).text(' Custom Attendance Report', { align: 'center' }).moveDown();
+        doc.fontSize(16).text('NFCAMS-Custom Attendance Report', { align: 'center' }).moveDown();
         doc.fontSize(12);
 
         // Define table headers and adjust column widths

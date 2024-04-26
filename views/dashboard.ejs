@@ -138,11 +138,7 @@
 
     <label for="subject">Subject:</label>
     <select id="subject" name="subject">
-      <option value="CDS6">CD-S6</option>
-      <option value="CGIPS6">CGIP-S6</option>
-      <option value="AADS6">AAD-S6</option>
-      <option value="PYTHONS6">PYTHON-S6</option>
-      <option value="IEFTS6">IEFT-S6</option>
+        <!-- Subject options will be dynamically populated here -->
     </select><br>
 
             <!-- Select collection for adding data -->
@@ -989,40 +985,37 @@ function fetchLowAttendanceStudents() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    fetchNotifications();
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-    fetchNotifications();
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-    fetchNotifications();
-});
 
-function fetchNotifications() {
-    fetch('https://ktu.edu.in/Menu/announcements')
-    .then(response => response.text()) // Assuming the API returns HTML content
-    .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const items = doc.querySelectorAll('.announcement'); // Modify this selector based on actual HTML structure of the API response
+<!-- Add this script section at the end of your dashboard.ejs file -->
 
-        const notificationList = document.querySelector('.notification-list');
-        notificationList.innerHTML = ''; // Clear existing notifications
+// Define the subjects for each teacher
+const teacherSubjects = {
+    'Jini_George': ['JAVAS3', 'CGIPS6'],
+    'Anitha': ['AADS6', 'FLATS5'],
+    'Nimitha': ['IEFTS6','PYTHONS6']
+};
 
-        items.forEach(item => {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.innerHTML = item.innerHTML; // Assuming you want to include the entire HTML content of each announcement
-            notificationList.appendChild(notification);
-        });
-    })
-    .catch(error => {
-        console.error('Failed to fetch notifications:', error);
+// Function to populate the subject dropdown based on the logged-in teacher's username
+function populateSubjectsForTeacher(username) {
+    const subjectDropdown = document.getElementById('subject');
+    subjectDropdown.innerHTML = ''; // Clear existing options
+
+    const subjects = teacherSubjects[username] || []; // Get subjects based on username
+
+    subjects.forEach(subject => {
+        const option = document.createElement('option');
+        option.value = subject;
+        option.textContent = subject;
+        subjectDropdown.appendChild(option);
     });
 }
+
+// Call populateSubjectsForTeacher with the logged-in teacher's username
+const loggedInUsername = '<%= username %>'; // Assuming the username is available in your EJS template
+populateSubjectsForTeacher(loggedInUsername);
+
 
   </script>
 </body>
