@@ -196,48 +196,69 @@ a:hover i{
   box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
 }
 
-.table{
-  border-collapse: collapse;
+.table {
+  border-collapse: separate;
   margin: 25px 0;
-  font-size: 15px;
-  min-width: 100%;
+  font-size: 16px;
+  width: 100%;
   overflow: hidden;
-  border-radius: 5px 5px 0 0;
-}
-table thead tr{
-  color: #fff;
-  background: #34AF6D;
-  text-align: left;
-  font-weight: bold;
-}
-.table th,
-.table td{
-  padding: 12px 15px;
-}
-.table tbody tr{
-  border-bottom: 1px solid #ddd;
-}
-.table tbody tr:nth-of-type(odd){
-  background: #f3f3f3;
-}
-.table tbody tr.active{
-  font-weight: bold;
-  color: #4AD489;
-}
-.table tbody tr:last-of-type{
-  border-bottom: 2px solid #4AD489;
-}
-.table button{
-  padding: 6px 20px;
   border-radius: 10px;
-  cursor: pointer;
-  background: transparent;
-  border: 1px solid #4AD489;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
 }
-.table button:hover{
-  background: #4AD489;
-  color: #fff;
-  transition: 0.5rem;
+
+.table:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+table thead tr {
+  background-color: #34AF6D;
+  color: #ffffff;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.table th,
+.table td {
+  padding: 15px 20px;
+  text-align: left;
+  transition: background-color 0.3s ease;
+}
+
+.table tbody tr {
+  border-bottom: 2px solid #f3f3f3;
+}
+
+.table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.table tbody tr:nth-of-type(odd) {
+  background-color: #ffffff;
+}
+
+.table tbody tr.active {
+  font-weight: bold;
+  color: #34AF6D;
+}
+
+.table tbody tr:last-of-type {
+  border-bottom: 3px solid #34AF6D;
+}
+
+.table button {
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 2px solid #34AF6D;
+  transition: all 0.3s ease;
+}
+
+.table button:hover {
+  background-color: #34AF6D;
+  color: #ffffff;
 }
 
 .take-attendance-btn {

@@ -209,7 +209,7 @@
              <th  style="position: relative;">Student Name</th>
              <th  style="position: relative;">Subject</th>
              <th  style="position: relative;">Period</th>
-             <th  style="position: relative;">Message </th>
+             <!-- <th  style="position: relative;">Message </th> -->
              <th  style="position: relative;">Delete </th>
            </tr>
          </thead>
@@ -224,10 +224,10 @@
                    <td><%= data.subject %></td>
                    <td><%= data.period %></td>
                   
-                   <td>
+                   <!-- <td> -->
                      <!-- Message icon for each student -->
-                     <button onclick="sendMessage('<%= data.studentName %>')" class="message-btn"><i class="fas fa-envelope"></i></button>
-                   </td>
+                     <!-- <button onclick="sendMessage('<%= data.studentName %>')" class="message-btn"><i class="fas fa-envelope"></i></button> -->
+                   <!-- </td> -->
                    <td>
                     <!-- Ensure the button in your HTML correctly passes the ID -->
 <button onclick="deleteAttendance('<%= data._id %>', '<%= username %>')">Delete</button>
