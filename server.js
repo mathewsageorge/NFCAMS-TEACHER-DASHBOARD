@@ -326,6 +326,19 @@ app.get('/generate-pdf-report', async (req, res) => {
         const doc = new PDFDocument();
         doc.pipe(res);
 
+        // Function to draw border
+        const drawBorder = () => {
+            doc.rect(20, 20, doc.page.width - 40, doc.page.height - 40).stroke();
+        };
+
+        // Draw border on the first page
+        drawBorder();
+
+        // Ensure border is drawn on each new page
+        doc.on('pageAdded', () => {
+            drawBorder();
+        });
+
         let currentDate = null;
 
         attendanceData.forEach(data => {
@@ -476,15 +489,11 @@ app.get('/generate-attendance-percentage-pdf', async (req, res) => {
     }
 
     try {
-        // Assuming you have a function to map serial numbers to student names
-        // and your attendance records are stored in a way that they can be queried by subject
         const Attendance = mongoose.model('Attendance', attendanceSchema, user.collection);
         const attendanceRecords = await Attendance.find({ subject: subject });
 
-        // Initialize an object to count attendance for each student
         let attendanceCounts = {};
 
-        // Loop through each attendance record
         attendanceRecords.forEach(record => {
             const studentName = mapSerialToStudentName(record.serialNumber);
             if (attendanceCounts[studentName]) {
@@ -494,20 +503,35 @@ app.get('/generate-attendance-percentage-pdf', async (req, res) => {
             }
         });
 
-        // Calculate attendance percentage for each student
         let percentages = [];
         for (let studentName in attendanceCounts) {
             let percentage = (attendanceCounts[studentName] / totalClasses) * 100;
             percentages.push({ studentName, percentage: percentage.toFixed(2) });
         }
 
-        // Generate PDF
         const doc = new PDFDocument();
         res.setHeader('Content-disposition', 'attachment; filename="attendance_percentage_report.pdf"');
         res.setHeader('Content-type', 'application/pdf');
         doc.pipe(res);
 
-        doc.fontSize(14).text('Attendance Percentage Report', { align: 'center' }).moveDown();
+        // Function to draw border and watermark
+        const drawBorderAndWatermark = () => {
+            doc.rect(20, 20, doc.page.width - 40, doc.page.height - 40).stroke();
+            doc.fontSize(60).opacity(0.1).text('NFCAMS', {
+                align: 'center',
+                baseline: 'middle'
+            });
+        };
+
+        // Draw border and watermark on the first page
+        drawBorderAndWatermark();
+
+        // Ensure border and watermark are drawn on each new page
+        doc.on('pageAdded', () => {
+            drawBorderAndWatermark();
+        });
+
+        doc.fontSize(14).opacity(1).text('NFCAMS-Attendance Percentage Report', { align: 'center' }).moveDown();
         doc.text(`Subject: ${subject}`).moveDown();
         doc.text(`Total Classes: ${totalClasses}`).moveDown(2);
 
@@ -538,6 +562,19 @@ app.post('/export-attendance-to-pdf', async (req, res) => {
         res.setHeader('Content-disposition', 'attachment; filename="attendance_report.pdf"');
         res.setHeader('Content-type', 'application/pdf');
         doc.pipe(res);
+
+        // Function to draw border
+        const drawBorder = () => {
+            doc.rect(20, 20, doc.page.width - 40, doc.page.height - 40).stroke();
+        };
+
+        // Draw border on the first page
+        drawBorder();
+
+        // Ensure border is drawn on each new page
+        doc.on('pageAdded', () => {
+            drawBorder();
+        });
 
         doc.fontSize(16).text('NFCAMS-Custom Attendance Report', { align: 'center' }).moveDown();
         doc.fontSize(12);
