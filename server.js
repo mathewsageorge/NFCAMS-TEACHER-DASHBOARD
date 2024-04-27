@@ -576,23 +576,26 @@ app.post('/export-attendance-to-pdf', async (req, res) => {
             drawBorder();
         });
 
-        doc.fontSize(16).text('NFCAMS-Custom Attendance Report', { align: 'center' }).moveDown();
+        doc.font('Helvetica-Bold').fontSize(16).text('NFCAMS-Custom Attendance Report', { align: 'center' }).moveDown();
         doc.fontSize(12);
 
         // Define table headers and adjust column widths
-        const headers = ["Date", "Time", "Student Name", "Subject", "Period"];
+        const headers = ["Date", "Time", "Student Name", "Subject/Class", "Period"];
         const columnWidths = [100, 80, 150, 100, 60]; // Adjusted widths to better fit content
 
         const startY = doc.y;
         const startX = doc.x;
 
-        // Draw headers
-        headers.forEach((header, i) => {
-            doc.text(header, startX + sumPreviousWidths(i, columnWidths), startY, { width: columnWidths[i], align: 'center' });
-        });
+       // Draw headers
+       headers.forEach((header, i) => {
+        doc.font('Helvetica-Bold').text(header, startX + sumPreviousWidths(i, columnWidths), startY, { width: columnWidths[i], align: 'left' });
+    });
 
         // Move to next row
         doc.moveDown(1.5);
+
+        // Reset font for data rows
+        doc.font('Helvetica');
 
         // Draw rows
         attendanceData.forEach(data => {
