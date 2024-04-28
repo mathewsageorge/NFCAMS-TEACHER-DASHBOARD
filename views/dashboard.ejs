@@ -112,9 +112,16 @@
             <h2>Add Attendance</h2>
             <button class="close-btn" onclick="closeAddAttendanceForm()">&times;</button> <!-- Close button -->
           </div>
-          <form id="attendanceForm"  onsubmit="submitAttendance(event)">
-            <label for="serialNumber">Serial Number:</label>
-            <input type="text" id="serialNumber" name="serialNumber" placeholder="Serial No or Roll No" required><br>
+          <form id="attendanceForm" onsubmit="submitAttendance(event)">
+            <label for="serialNumber">Roll Number</label>
+            <input type="text" id="serialNumber" name="serialNumber" list="rollNumbers" placeholder="Serial No or Roll No" required><br>
+            <datalist id="rollNumbers">
+                <option value="1">Mathews A George</option>
+                <option value="2">Ansu Rose Joseph</option>
+                <option value="3">Keshav Umesh</option>
+                <option value="4">Neha Sara Cherian</option>
+                <!-- Add more options as needed -->
+            </datalist>
 
             <!-- <label for="logData">Log Data:</label> -->
             <!-- <input type="text" id="logData" name="logData"  value="in"  required><br> -->
