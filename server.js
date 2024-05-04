@@ -150,6 +150,7 @@ function mapSerialToStudentName(serialNumber) {
         "05:33:96:60:06:b0:c1": "Ansu Rose Joseph", //roll no:2
         "05:36:41:dc:f7:b0:c1": "Keshav Umesh", //roll no:3
         "05:35:84:cc:f7:b0:c1": "Neha Sara Cherian", //roll no:4
+        "05:34:6a:64:26:b0:c1": "Adhwaith J" //roll no:5
 
         
         // Add more mappings as needed
