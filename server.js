@@ -2,7 +2,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const twilio = require('twilio');
 const exceljs = require('exceljs');
 const PDFDocument = require('pdfkit');
 const ObjectId = mongoose.Types.ObjectId;
@@ -85,36 +84,7 @@ app.post('/send-message', upload.single('pdfFile'), async (req, res) => {
     });
 });
 
-// Twilio Configuration
-const accountSid = 'ACc07160ca1b3e33d178f16e780fc7d96a';
-const authToken = '45bc8f5c090aa60a4bf4110b4365a3c1';
-const client = new twilio(accountSid, authToken);
 
-// Handle POST request to send SMS
-app.post('/send-sms', async (req, res) => {
-    const { studentName } = req.body;
-
-    if (!studentName) {
-        return res.status(400).json({ error: 'Missing studentName in request body' });
-    }
-
-    // Logic to retrieve the student's phone number and send SMS using Twilio
-    // Modify this part according to your implementation
-    const phoneNumber = '+1234567890'; // Example phone number
-    client.messages.create({
-        body: 'TEST MESSAGE',
-        to: '+919544461968',
-        from: '+14243835712' // Your Twilio phone number
-    })
-    .then(message => {
-        console.log('SMS sent successfully:', message.sid);
-        res.sendStatus(200);
-    })
-    .catch(error => {
-        console.error('Error sending SMS:', error);
-        res.status(500).send('Failed to send SMS');
-    });
-});
 
 // Define mongoose schema and model for attendance data
 const attendanceSchema = new mongoose.Schema({
