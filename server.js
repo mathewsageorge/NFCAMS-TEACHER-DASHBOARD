@@ -153,8 +153,7 @@ app.get('/', (req, res) => {
 // server.js
 
 // Route for handling login and rendering dashboard with attendance and student data
-// Route handlers
-app.get('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     res.render('login');
     const { username, password } = req.body;
     const user = users[username];
