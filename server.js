@@ -24,6 +24,14 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+const session = require('express-session');
+
+app.use(session({
+  secret: ' s3cr3t-k3y-1234567890abcdef', // This is a secret key to sign the session ID cookie.
+  resave: false, // This forces the session to be saved back to the session store, even if the session was never modified during the request.
+  saveUninitialized: false, // This forces a session that is "uninitialized" to be saved to the store.
+  cookie: { secure: true } // If true, requires an https-enabled website, i.e., HTTPS is necessary.
+}));
 
 // MongoDB Connection
 mongoose.connect('mongodb+srv://mathewsgeorge202:ansu@cluster0.ylyaonw.mongodb.net/NFC?retryWrites=true&w=majority')
@@ -201,14 +209,14 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// GET route to render the dashboard
-app.get('/dashboard', (req, res) => {
+   // Example of accessing session data
+   app.get('/dashboard', (req, res) => {
     if (req.session.user) {
-        res.render('dashboard', req.session.user);
+      res.render('dashboard', { username: req.session.user.username });
     } else {
-        res.redirect('/'); // Redirect to login if no session data is found
+      res.redirect('/login'); // Redirect to login if no user session exists
     }
-});
+  });
 
 // Define the schema for TotalClasses
 const totalClassesSchema = new mongoose.Schema({
