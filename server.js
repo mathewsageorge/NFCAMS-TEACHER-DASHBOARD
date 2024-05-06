@@ -163,12 +163,9 @@ app.post('/login', async (req, res) => {
             // Extract unique subjects from attendance data
             const uniqueSubjects = [...new Set(attendanceData.map(data => data.subject))];
 
-            
             // Extract unique classes from student data
             const uniqueClasses = [...new Set(studentData.map(student => student.class))];
 
-            
-            
             // Map attendance data to include student names
             const mappedAttendanceData = attendanceData.map(data => {
                 return {
@@ -183,17 +180,18 @@ app.post('/login', async (req, res) => {
                 };
             });
 
-            // Render dashboard with attendance and student data
-            res.render('dashboard', { 
-                username: user.username, 
-                students: studentData, 
-                attendanceData: mappedAttendanceData, 
-                periods: uniquePeriods, 
+            // Store data in session or another method to persist data
+            req.session.user = {
+                username: user.username,
+                students: studentData,
+                attendanceData: mappedAttendanceData,
+                periods: uniquePeriods,
                 subjects: uniqueSubjects,
-                student: attendanceData,
                 classes: uniqueClasses,
-                
-            });
+            };
+
+            // Redirect to a GET route that renders the dashboard
+            res.redirect('/dashboard');
         } catch (err) {
             console.error('Error retrieving data:', err);
             res.render('error', { message: 'Error retrieving data' });
@@ -203,7 +201,14 @@ app.post('/login', async (req, res) => {
     }
 });
 
-
+// GET route to render the dashboard
+app.get('/dashboard', (req, res) => {
+    if (req.session.user) {
+        res.render('dashboard', req.session.user);
+    } else {
+        res.redirect('/'); // Redirect to login if no session data is found
+    }
+});
 
 // Define the schema for TotalClasses
 const totalClassesSchema = new mongoose.Schema({
