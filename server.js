@@ -144,7 +144,7 @@ app.get('/', (req, res) => {
 // server.js
 
 // Route for handling login and rendering dashboard with attendance and student data
-app.post('/login', async (req, res) => {
+app.post('/dashboard', async (req, res) => {
     const { username, password } = req.body;
     const user = users[username];
     if (user && user.password === password) {
