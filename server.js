@@ -17,15 +17,6 @@ const io = socketIo(server); // Setup socket.io
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use((req, res, next) => {
-    // Exclude login route and potentially other public routes from authentication
-    const path = req.path;
-    if (!req.session.user && !['/login', '/public'].includes(path)) {
-        res.redirect('/login');
-    } else {
-        next();
-    }
-});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
@@ -154,7 +145,6 @@ app.get('/', (req, res) => {
 
 // Route for handling login and rendering dashboard with attendance and student data
 app.post('/login', async (req, res) => {
-    res.render('login');
     const { username, password } = req.body;
     const user = users[username];
     if (user && user.password === password) {
