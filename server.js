@@ -1,5 +1,6 @@
 // server.js
 const express = require('express');
+const http = require('http');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const exceljs = require('exceljs');
@@ -9,6 +10,10 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' }); // Files will be saved in the 'uploads' directory
 
 const app = express();
+const server = http.createServer(app);
+const socketIo = require('socket.io');
+const io = socketIo(server); // Setup socket.io
+
 const PORT = process.env.PORT || 3000;
 
 // Middleware
@@ -139,7 +144,8 @@ app.get('/', (req, res) => {
 // server.js
 
 // Route for handling login and rendering dashboard with attendance and student data
-app.post('/login', async (req, res) => {
+app.get('/login', (req, res) => {
+    res.render('login'); // Make sure 'login' points to your login EJS file
     const { username, password } = req.body;
     const user = users[username];
     if (user && user.password === password) {
@@ -366,7 +372,7 @@ app.post('/add-attendance', async (req, res) => {
   
       // Save attendance data to the specified collection
       await newAttendance.save();
-  
+      io.emit('attendanceAdded', newAttendance); // Emit event to all clients
       res.status(200).send('Attendance added successfully');
     } catch (error) {
       console.error('Error adding attendance:', error);
@@ -400,6 +406,7 @@ app.post('/add-attendance', async (req, res) => {
         // Attempt to delete the record by ID
         const result = await AttendanceModel.findByIdAndDelete(id);
         if (result) {
+            io.emit('attendanceDeleted', id); // Emit event to all clients
             res.json({ success: true, message: 'Record deleted successfully' });
         } else {
             res.status(404).json({ success: false, message: 'Record not found' });
@@ -651,6 +658,6 @@ app.get('/students-low-attendance', async (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

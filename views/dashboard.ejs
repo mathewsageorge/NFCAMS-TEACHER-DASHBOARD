@@ -13,6 +13,7 @@
     /* Additional CSS can go here */
    
   </style>
+  <script src="/socket.io/socket.io.js"></script> <!-- Include socket.io client -->
 </head>
 <body>
   <div class="container">
@@ -853,7 +854,7 @@ function deleteAttendance(id, username) {
             if (data.success) {
                 alert('Record deleted successfully');
                 // Optionally, refresh the page or remove the row from the table
-                refreshPage(); // Refresh the page to reflect the changes
+                
             } else {
                 alert('Failed to delete record');
             }
@@ -1004,6 +1005,29 @@ function populateSubjectsForTeacher(username) {
 const loggedInUsername = '<%= username %>'; // Assuming the username is available in your EJS template
 populateSubjectsForTeacher(loggedInUsername);
 
+const socket = io(); // Connect to the WebSocket server
+
+socket.on('attendanceAdded', function(attendance) {
+    const tbody = document.querySelector('#attendanceTable tbody');
+    const row = `<tr>
+        <td>${new Date(attendance.time).toDateString()}</td>
+        <td>${new Date(attendance.time).toLocaleTimeString()}</td>
+        <td>${attendance.studentName}</td>
+        <td>${attendance.subject}</td>
+        <td>${attendance.period}</td>
+        <td><button onclick="deleteAttendance('${attendance._id}', '<%= username %>')">Delete</button></td>
+    </tr>`;
+    tbody.innerHTML += row; // Add new row to the table
+});
+
+socket.on('attendanceDeleted', function(id) {
+    const rows = document.querySelectorAll('#attendanceTable tbody tr');
+    rows.forEach(row => {
+        if (row.querySelector('button').onclick.toString().includes(id)) {
+            row.remove(); // Remove the row from the table
+        }
+    });
+});
 
   </script>
 </body>
