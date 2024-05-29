@@ -43,41 +43,36 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// Define student data with parent emails
+const studentParentData = [
+    { studentName: "MATHEWS A GEORGE", class: "CSES6", studentEmail: "pta21cs044@cek.ac.in", parentEmail: "mathewsgeorge2003@gmail.com" },
+    { studentName: "Jane Smith", class: "CSES6", studentEmail: "jane.smith@example.com", parentEmail: "parent.smith@example.com" },
+    { studentName: "Alice Johnson", class: "CSES6", studentEmail: "alice.johnson@example.com", parentEmail: "parent.johnson@example.com" },
+    { studentName: "Bob Brown", class: "CSES5", studentEmail: "bob.brown@example.com", parentEmail: "parent.brown@example.com" }
+];
+
+// Route to get students by class
+app.get('/get-students-by-class', (req, res) => {
+    const { classId } = req.query;
+    const filteredStudents = studentParentData.filter(student => student.class === classId);
+    res.json(filteredStudents);
+});
+
 app.post('/send-message', upload.single('pdfFile'), async (req, res) => {
-    const { recipientType, email, subject, message } = req.body;
-  
-    // Define recipient emails for groups directly in the server code
-    const groupEmails = {
-        parents: ['mathewsgeorge2003@gmail.com', 'ansurose41@gmail.com',"pta21cs044@cek.ac.in"], // Example group
-        students: ['student1@example.com', 'student2@example.com'] // Another example group
-    };
-    // Determine the recipient based on the recipientType
-    let recipients;
-    if (recipientType === 'individual') {
-        recipients = email; // Use the provided email for individual messages
-    } else {
-        // Use a predefined group of emails from groupEmails
-        recipients = groupEmails[recipientType].join(', '); // Join group emails into a single string
-    }
-    // Define the email options
+    const { studentEmails, subject, message } = req.body;
+    let recipients = Array.isArray(studentEmails) ? studentEmails.join(', ') : studentEmails;
+
     let mailOptions = {
-        from: 'mathewsgeorge202@gmail.com',
+        from: 'your-email@example.com',
         to: recipients,
         subject: subject,
         text: message,
     };
 
-    // Check if a file was uploaded and include it as an attachment if present
     if (req.file) {
-        mailOptions.attachments = [
-            {
-                filename: req.file.originalname,
-                path: req.file.path
-            }
-        ];
+        mailOptions.attachments = [{ filename: req.file.originalname, path: req.file.path }];
     }
-    
-    // Send the email
+
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.log(error);
@@ -89,7 +84,12 @@ app.post('/send-message', upload.single('pdfFile'), async (req, res) => {
     });
 });
 
-
+// Define which subjects each teacher can edit
+const teacherSubjects = {
+    'Jini_George': ['CGIPS6', 'DESIGNS4'],
+    'Anitha': ['AADS6', 'OSS4'],
+    'Nimitha': ['IEFTS6', 'COAS4']
+};
 
 // Define mongoose schema and model for attendance data
 const attendanceSchema = new mongoose.Schema({
@@ -653,6 +653,34 @@ app.get('/students-low-attendance', async (req, res) => {
     } catch (error) {
         console.error('Error fetching low attendance students:', error);
         res.status(500).json({ error: 'Failed to fetch low attendance students' });
+    }
+});
+
+app.post('/set-class-count', async (req, res) => {
+    const { username, subject, newCount } = req.body;
+
+    // Check if the user is authorized to update the subject
+    const userSubjects = teacherSubjects[username];
+    if (!userSubjects || !userSubjects.includes(subject)) {
+        return res.status(403).json({ message: 'You are not authorized to update this subject' });
+    }
+
+    try {
+        // Set the class count for the subject to the specified new count
+        const result = await TotalClasses.findOneAndUpdate(
+            { subject: subject },
+            { $set: { count: parseInt(newCount) } },
+            { new: true }
+        );
+
+        if (result) {
+            res.json({ message: `Class count for ${subject} updated successfully to ${result.count}` });
+        } else {
+            res.status(404).json({ message: 'Subject not found' });
+        }
+    } catch (error) {
+        console.error('Error updating class count:', error);
+        res.status(500).json({ message: 'Failed to update class count' });
     }
 });
 

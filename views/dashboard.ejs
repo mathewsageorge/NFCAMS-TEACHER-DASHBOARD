@@ -325,14 +325,35 @@
       <div class="messages-content">
         <h2>Send a Message</h2>
         <form id="messageForm" action="/send-message" method="post" class="message-form" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="recipientType">Recipient Type:</label>
-            <select name="recipientType" id="recipientType" class="form-control">
-              <option value="individual">Individual</option>
-              <option value="parents">Parents (Group MSG)</option>
-              <option value="students">Students (Group MSG)</option>
-            </select>
-          </div>
+       <!-- Place this within the message form section -->
+<div class="form-group">
+  <label for="recipientType">Recipient Type:</label>
+  <select name="recipientType" id="recipientType" class="form-control">
+      <option value="individual">Individual</option>
+      <option value="parents">Parents (Group MSG)</option>
+      <option value="students">Students (Group MSG)</option>
+  </select>
+</div>
+
+<div class="form-group" id="classSelector" style="display: none;">
+  <label for="classSelect">Select Class:</label>
+  <select id="classSelect" class="form-control">
+      <option value="">Select a Class</option>
+      <option value="CSES6">CSE-S6</option>
+      <option value="CSES5">CSE-S5</option>
+  </select>
+</div>
+
+<div id="studentsList" style="display: none;"></div>
+<div class="form-group" id="classSelector" style="display: none;">
+  <label for="classSelect">Select Class:</label>
+  <select id="classSelect" class="form-control">
+      <option value="">Select a Class</option>
+      <option value="CSES6">CSE-S6</option>
+      <option value="CSES5">CSE-S5</option>
+  </select>
+</div>
+
           <div class="form-group">
             <label for="email">Email (for individual only not used for group msgs) :</label>
             <input type="email" id="email" name="email" class="form-control">
@@ -362,6 +383,7 @@
       <button onclick="refreshPage()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
       <div class="attendance-percentage-content">
         <h1>Calculate Attendance Percentage Based on Subject</h1><br>
+        
         
         <!-- <label for="">Subject: (Format for entering below input : <b> <span class="sub"> SUBJECT</span></span><span class="hai">CLASS</span> Example:CDS6)</b></label> -->
         <!-- <input  type="text" id="subjectInput" name="subject" placeholder="FORMAT:CDS6/AADS6/CGIPS6/PYTHONS6"  required><br> -->
@@ -420,15 +442,30 @@
       <div class="profile-content">
         <h1>Profile Information</h1>
         <div class="profile-card">
-          <i class="fas fa-user"></i>
-          <p>Username: <%= username %></p>
+            <i class="fas fa-user"></i>
+            <p>Username: <%= username %></p>
         </div>
         <div class="profile-card">
-          <i class="fas fa-envelope"></i>
-          <p>Email: mathewsgeorge202@gmail.com</p>
+            <i class="fas fa-envelope"></i>
+            <p>Email: mathewsgeorge202@gmail.com</p>
         </div>
-        <!-- Add more profile details here -->
-      </div>
+              <!-- Form to increment class count with modern styling -->
+<div class="increment-class-form">
+  <h2>Set Class Count</h2>
+  <form action="/set-class-count" method="post" onsubmit="return false;">
+      <input type="hidden" name="username" value="<%= username %>">
+      <label for="subject">Select Subject:</label>
+      <select name="subject" id="subject">
+          <% subjects.forEach(subject => { %>
+              <option value="<%= subject %>"><%= subject %></option>
+          <% }); %>
+      </select>
+      <label for="newCount">New Class Count:</label>
+      <input type="number" id="newCount" name="newCount" min="0" required>
+      <button type="submit">Update Count</button>
+  </form>
+</div>
+    </div>
     </section>
   </section>
 
@@ -448,6 +485,68 @@
  
 
   <script>
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const recipientTypeSelect = document.getElementById('recipientType');
+    const classSelector = document.getElementById('classSelector');
+    const studentsList = document.getElementById('studentsList');
+
+    recipientTypeSelect.addEventListener('change', function() {
+        const showClassSelector = this.value === 'parents' || this.value === 'students';
+        classSelector.style.display = showClassSelector ? 'block' : 'none';
+        studentsList.innerHTML = ''; // Clear the list
+        studentsList.style.display = 'none';
+    });
+
+    document.getElementById('classSelect').addEventListener('change', function() {
+        const recipientType = recipientTypeSelect.value;
+        const emailType = recipientType === 'parents' ? 'parentEmail' : 'studentEmail';
+
+        if (this.value) {
+            fetch(`/get-students-by-class?classId=${this.value}`)
+            .then(response => response.json())
+            .then(data => {
+                studentsList.style.display = 'block';
+                studentsList.innerHTML = ''; // Clear previous entries
+                data.forEach(student => {
+                    studentsList.innerHTML += `
+                        <label>
+                            <input type="checkbox" name="studentEmails" value="${student[emailType]}"> ${student.studentName} (${student.class})
+                        </label><br>
+                    `;
+                });
+            });
+        } else {
+            studentsList.innerHTML = ''; // Clear the list if no class is selected
+            studentsList.style.display = 'none';
+        }
+    });
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.increment-class-form form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // This prevents the default form submission
+
+        const formData = new FormData(form);
+        fetch('/set-class-count', {
+            method: 'POST',
+            body: new URLSearchParams(formData) // Ensure proper encoding of form data
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message); // Display an alert with the response message
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to update class count');
+        });
+    });
+});
+
 
 document.addEventListener('DOMContentLoaded', function() {
     var modal = document.getElementById("myModal");
