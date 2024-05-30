@@ -329,7 +329,8 @@
 <div class="form-group">
   <label for="recipientType">Recipient Type:</label>
   <select name="recipientType" id="recipientType" class="form-control">
-      <option value="individual">Individual</option>
+      <!-- <option value="individual">Individual</option> -->
+      <option value="select">Select</option>
       <option value="parents">Parents (Group MSG)</option>
       <option value="students">Students (Group MSG)</option>
   </select>
@@ -374,7 +375,10 @@
 
 
           <button type="submit" class="btn-send">Send <i class="fas fa-paper-plane"></i></button>
+          <div id="loadingIndicator" class="spinner" style="display: none;"></div> 
         </form>
+        
+         
         <div id="messageStatus"></div> <!-- Placeholder for the status message -->
       </div>
     </section>
@@ -402,6 +406,8 @@
         <label for="totalClassesInput">Total Classes Conducted:</label>
         <input type="number" id="totalClassesInput" name="totalClasses" placeholder="Enter Total Classes Conducted for Above Subject (Total Hours Taken)" required readonly>
         <button onclick="calculateAttendancePercentage()" class="secondary-button">Calculate</button>
+       <!-- Spinner HTML with a unique class name -->
+<div id="attendanceLoadingIndicator" class="attendanceSpinner" style="display: none;"></div>
         
         <!-- Predefined table structure -->
         <div id="attendancePercentageResults" style="display: none;">
@@ -553,24 +559,29 @@ document.addEventListener('DOMContentLoaded', function() {
     var span = document.getElementsByClassName("close")[0];
 
     document.getElementById('messageForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); // Prevent the default form submission
 
-        const formData = new FormData(this);
-        fetch('/send-message', {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("modalMessage").innerText = data; // Set the message
-            modal.style.display = "block"; // Show the modal
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById("modalMessage").innerText = 'Error sending message';
-            modal.style.display = "block"; // Show the modal
-        });
+    // Show the spinner
+    document.getElementById('loadingIndicator').style.display = 'block';
+
+    const formData = new FormData(this);
+    fetch('/send-message', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("modalMessage").innerText = data; // Set the message
+        modal.style.display = "block"; // Show the modal
+        document.getElementById('loadingIndicator').style.display = 'none'; // Hide the spinner
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById("modalMessage").innerText = 'Error sending message';
+        modal.style.display = "block"; // Show the modal
+        document.getElementById('loadingIndicator').style.display = 'none'; // Hide the spinner
     });
+});
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
@@ -713,7 +724,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
 function calculateAttendancePercentage() {
+    // Show the spinner
+    document.getElementById('attendanceLoadingIndicator').style.display = 'block';
+
     const subjectInput = document.getElementById('subjectInput');
     let subject = subjectInput.value.toUpperCase(); // Convert to uppercase
     const username = '<%= username %>';
@@ -742,18 +757,27 @@ function calculateAttendancePercentage() {
                     tbody.innerHTML += row;
                 });
                 document.getElementById('attendancePercentageResults').style.display = 'block';
+                // Hide the spinner
+                document.getElementById('attendanceLoadingIndicator').style.display = 'none';
             })
             .catch(error => {
                 console.error('Error:', error);
+                // Hide the spinner
+                document.getElementById('attendanceLoadingIndicator').style.display = 'none';
             });
         } else {
             console.error('Total classes data not found');
+            // Hide the spinner
+            document.getElementById('attendanceLoadingIndicator').style.display = 'none';
         }
     })
     .catch(error => {
         console.error('Error fetching total classes:', error);
+        // Hide the spinner
+        document.getElementById('attendanceLoadingIndicator').style.display = 'none';
     });
 }
+
 
 function generateAttendancePercentagePDF() {
     const subject = document.getElementById('subjectInput').value;
@@ -820,6 +844,7 @@ function displayAttendanceByDateAndSubjectandPeriod() {
 
 function logout() {
       // Redirect to the login page or any other action you want to perform on logout
+      localStorage.clear();
       window.location.href = "/"; // Assuming your login page is served at the root URL
     }
 

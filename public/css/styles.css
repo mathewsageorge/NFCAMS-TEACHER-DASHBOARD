@@ -905,3 +905,53 @@ table thead tr {
   cursor: pointer;
   font-size: 16px;
 }
+
+.spinner {
+  border: 6px solid rgba(255, 255, 255, 0.3);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border-top-color: #3498db; /* Blue shade */
+  position: relative;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+/* Optional: Center the spinner in the view or over the form */
+.spinner {
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  margin-top: -20px; /* half of height */
+  margin-left: -20px; /* half of width */
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+
+
+.attendanceSpinner {
+  border: 6px solid rgba(255, 255, 255, 0.3);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border-top-color: #3498db; /* Blue shade */
+  position: relative;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
