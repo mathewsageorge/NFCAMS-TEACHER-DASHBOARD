@@ -45,10 +45,10 @@ const transporter = nodemailer.createTransport({
 
 // Define student data with parent emails
 const studentParentData = [
-    { studentName: "MATHEWS A GEORGE", class: "CSES6", studentEmail: "pta21cs044@cek.ac.in", parentEmail: "mathewsgeorge2003@gmail.com" },
-    { studentName: "Jane Smith", class: "CSES6", studentEmail: "jane.smith@example.com", parentEmail: "parent.smith@example.com" },
-    { studentName: "Alice Johnson", class: "CSES6", studentEmail: "alice.johnson@example.com", parentEmail: "parent.johnson@example.com" },
-    { studentName: "Bob Brown", class: "CSES5", studentEmail: "bob.brown@example.com", parentEmail: "parent.brown@example.com" }
+    { studentName: "Mathews A George", class: "CSES6", studentEmail: "pta21cs044@cek.ac.in", parentEmail: "mathewsgeorge2003@gmail.com" },
+    { studentName: "Ansu Rose Joseph", class: "CSES6", studentEmail: "jane.smith@example.com", parentEmail: "parent.smith@example.com" },
+    { studentName: "Keshav Umesh", class: "CSES6", studentEmail: "alice.johnson@example.com", parentEmail: "parent.johnson@example.com" },
+    { studentName: "Neha Sara Cherian", class: "CSES5", studentEmail: "bob.brown@example.com", parentEmail: "parent.brown@example.com" }
 ];
 
 // Route to get students by class

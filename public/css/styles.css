@@ -701,55 +701,84 @@ table thead tr {
 
 /* Enhanced Message Form Styles */
 .messages-content {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 25px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   font-family: 'Poppins', sans-serif;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.messages-content:hover {
+  transform: scale(1.02);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
 .message-form .form-group {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .message-form .form-control {
   width: 100%;
-  padding: 12px 15px;
-  border: 2px solid #e7e7e7;
-  border-radius: 5px;
+  padding: 15px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   box-sizing: border-box;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .message-form .form-control:focus {
-  border-color: #34AF6D;
+  border-color: #007BFF;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
 }
 
 .message-form .btn-send {
-  background-color: #34AF6D;
+  background-color: #007BFF;
   color: white;
-  padding: 12px 20px;
+  padding: 15px 25px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .message-form .btn-send:hover {
   background-color: #0056b3;
+  transform: translateY(-2px);
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-weight: 600;
   color: #333;
+  transition: color 0.3s;
+}
+
+.form-group label:hover {
+  color: #007BFF;
+}
+
+.btn-reset {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-left: 10px;
+}
+
+.btn-reset:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
 }
 
 /* The Modal (background) */
@@ -955,3 +984,6 @@ table thead tr {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+
+

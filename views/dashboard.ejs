@@ -328,6 +328,7 @@
        <!-- Place this within the message form section -->
 <div class="form-group">
   <label for="recipientType">Recipient Type:</label>
+
   <select name="recipientType" id="recipientType" class="form-control">
       <!-- <option value="individual">Individual</option> -->
       <option value="select">Select</option>
@@ -356,8 +357,8 @@
 </div>
 
           <div class="form-group">
-            <label for="email">Email (for individual only not used for group msgs) :</label>
-            <input type="email" id="email" name="email" class="form-control">
+           
+            
           </div>
           <div class="form-group">
             <label for="subject">Subject For Email:</label>
@@ -375,6 +376,7 @@
 
 
           <button type="submit" class="btn-send">Send <i class="fas fa-paper-plane"></i></button>
+          <button type="button" onclick="resetForm()" class="btn-reset">Reset Form</button> <!-- Reset button -->
           <div id="loadingIndicator" class="spinner" style="display: none;"></div> 
         </form>
         
@@ -385,6 +387,7 @@
 
     <section class="attendance-percentage" style="display:none;">
       <button onclick="refreshPage()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
+      
       <div class="attendance-percentage-content">
         <h1>Calculate Attendance Percentage Based on Subject</h1><br>
         
@@ -491,6 +494,10 @@
  
 
   <script>
+
+function resetForm() {
+        document.getElementById('messageForm').reset();
+      }
 
 
 document.addEventListener('DOMContentLoaded', function() {
