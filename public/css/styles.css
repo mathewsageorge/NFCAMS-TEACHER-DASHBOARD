@@ -83,10 +83,55 @@ a:hover i{
   display: flex;
 }
 
+/* Enhanced Welcome Section */
+.welcome-message {
+  background-color: #ffffff; /* Light background for the content */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transitions for hover effects */
+}
+
+.welcome-message h3 {
+  color: #34AF6D; /* A fresh, vibrant green for headings */
+  font-size: 24px; /* Larger font size for emphasis */
+  margin-bottom: 10px; /* Spacing below the heading */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.welcome-message p {
+  color: #666; /* Darker text for better readability */
+  font-size: 16px; /* Optimal font size for paragraph text */
+  line-height: 1.6; /* Improved line height for readability */
+}
+
+.welcome-message:hover {
+  transform: scale(1.02); /* Subtly enlarge on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover for a "lifting" effect */
+}
+
+/* Adding a button for user interaction */
+.welcome-message button {
+  background-color: #34AF6D;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+  margin-top: 15px; /* Space above the button */
+}
+
+.welcome-message button:hover {
+  background-color: #4AD489; /* Lighter green on hover */
+}
+
 
 
 
 /* MAin Section */
+
+
 .main{
   position: relative;
   padding: 20px;
@@ -96,13 +141,14 @@ a:hover i{
   display: flex;
   width: 100%;
 }
-.main-top i{
-  position: absolute;
-  right: 0;
-  margin: 10px 30px;
-  color: rgb(110, 109, 109);
-  cursor: pointer;
-}
+.main-top {
+  display: flex;
+  width: 100%;
+  align-items: center; /* Ensure items are vertically centered */
+  justify-content: space-between; /* Distributes space between and around content items */
+  padding: px; /* Padding around the content */
+  margin-bottom: 2px; /* Reduced space between this section and the next */
+} 
 .main .users{
   display: flex;
   width: 100%;
@@ -154,6 +200,13 @@ a:hover i{
   background: #4AD489;
   color: #fff;
   transition: 0.5s;
+}
+
+.main-top h1 {
+  color: #666; /* Green color to match the theme */
+  font-size: 28px; /* Slightly larger font size */
+  font-weight: bold; /* Bold font weight for emphasis */
+  margin-bottom: 10px; /* Space below the heading */
 }
 
 /*Attendance List serction  */
@@ -984,6 +1037,59 @@ table thead tr {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.announcements-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+
+.announcement-header h1 {
+  color: #34AF6D;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.low-attendance-container {
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.section-title {
+  color: #007bff;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.low-attendance-list {
+  list-style: none;
+  padding: 0;
+}
+
+.low-attendance-list .student-entry {
+  background-color: #f0f0f0;
+  border-left: 5px solid #dc3545;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .announcements-container {
+    flex-direction: column;
+  }
+}
+
+
 
 
 

@@ -431,20 +431,19 @@
       </div>
     </section>
 
-    <section class="announcements" style="display:none;">
-      <h1>Here you can view the latest announcements.</h1><br>
-      <!-- <p>Here you can view the latest announcements.</p><br> -->
-      <!-- Add more content as needed -->
-      <div class="announcements-container">
-        <div id="lowAttendanceSection" class="low-attendance-container">
-          <h1 class="section-title"><U>Students with Low Attendance</U></h1>
-          <div id="lowAttendanceList" class="low-attendance-list">
-              <!-- Subjects and students will be dynamically inserted here -->
-          </div>
-        </div>
-       
+  <section class="announcements" style="display:none;">
+  <div class="announcements-container">
+    <div class="announcement-header">
+      <h1>Latest Announcements</h1>
+    </div>
+    <div id="lowAttendanceSection" class="low-attendance-container">
+      <h2 class="section-title">Students with Low Attendance</h2>
+      <div id="lowAttendanceList" class="low-attendance-list">
+          <!-- Subjects and students will be dynamically inserted here -->
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <section class="profile" style="display:none;">
       <button onclick="refreshPage()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
@@ -619,7 +618,7 @@ document.getElementById('profile-icon').addEventListener('click', function(event
   document.getElementById('dashboard-link').addEventListener('click', function(event) {
     event.preventDefault();
     // Update heading
-    document.querySelector('.main-top h1').innerText = 'Welcome to Dashboard';
+    document.querySelector('.main-top h1').innerText = 'Welcome to NFCAMS Teacher Dashboard';
     // Hide all sections
     hideAllSections();
     // Show welcome section
@@ -641,7 +640,7 @@ document.getElementById('profile-icon').addEventListener('click', function(event
   document.getElementById('attendance-link').addEventListener('click', function(event) {
     event.preventDefault();
     // Update heading
-    document.querySelector('.main-top h1').innerText = 'Attendance';
+    document.querySelector('.main-top h1').innerText = 'View Attendance';
     // Hide all sections
     hideAllSections();
     // Show attendance section
@@ -662,14 +661,14 @@ document.getElementById('profile-icon').addEventListener('click', function(event
 // Update the event listener for the profile-link
 document.getElementById('profile-link').addEventListener('click', function(event) {
   event.preventDefault();
-  document.querySelector('.main-top h1').innerText = 'Profile';
+  document.querySelector('.main-top h1').innerText = 'Settings';
   hideAllSections();
   document.querySelector('.profile').style.display = 'block'; // Updated class reference
 });
 
 document.getElementById('attendance-percentage-link').addEventListener('click', function(event) {
   event.preventDefault();
-  document.querySelector('.main-top h1').innerText = 'Attendance Percentage';
+  document.querySelector('.main-top h1').innerText = 'Attendance Percentage Calculation';
   hideAllSections();
   document.querySelector('.attendance-percentage').style.display = 'block';
 });
