@@ -644,22 +644,18 @@ table thead tr {
 .report-link {
   display: inline-block;
   background-color: #34AF6D;
-  color: #fff;
+  color: white;
   padding: 10px 20px;
+  border: none;
   border-radius: 5px;
-  text-decoration: none;
-  margin-right: 10px;
-  transition: background-color 0.3s ease;
-  /* Add box shadow for a raised effect */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  /* Add animation effect */
-  transition: transform 0.3s ease;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .report-link:hover {
   background-color: #0056b3;
   /* Add slight scale effect on hover */
-  transform: scale(1.05);
+  transform: scale(1.0);
 }
 
 .report-link i {

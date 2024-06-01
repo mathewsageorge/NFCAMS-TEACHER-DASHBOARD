@@ -44,10 +44,10 @@
     <i class="fas fa-bullhorn"></i>
     <span class="nav-item">Announcements</span>
   </a></li>
-        <li><a href="#" id="report-link" class="nav-itemm">
-          <i class="fas fa-file-alt"></i>
-          <span class="nav-item">Report</span>
-        </a></li>
+        <!-- <li><a href="#" id="report-link" class="nav-itemm"> -->
+          <!-- <i class="fas fa-file-alt"></i> -->
+          <!-- <span class="nav-item">Report</span> -->
+        <!-- </a></li> -->
 
         
         
@@ -209,7 +209,10 @@
 </div>
 
        <button onclick="displayAttendanceByDateAndSubjectandPeriod()" class="secondary-button">Display Attendance</button>
-       <button onclick="exportAttendanceToPDF()" class="secondary-button">Export to PDF</button>
+       <button onclick="exportAttendanceToPDF()" class="secondary-button">Export Table to PDF</button>
+
+       <a href="/generate-excel-report?username=<%= username %>" target="_blank" class="report-link report-excel">Download Excel Report <i class="fas fa-file-excel"></i></a>
+       <a href="/generate-pdf-report?username=<%= username %>" class="report-link report-pdf" target="_blank">Download PDF Report <i class="fas fa-file-pdf"></i></a>
 
        <table id="attendanceTable" class="table">
          <thead>
@@ -252,35 +255,35 @@
      </div>
    </section>
 
-    <section class="report" style="display:none;">
+    <!-- <section class="report" style="display:none;"> -->
       <!-- Report content -->
-      <button onclick="refreshPage()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
-      <div class="report-list">
-        <h1 >Monthly Attendance Report Generation</h1>
+      <!-- <button onclick="refreshPage()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button> -->
+      <!-- <div class="report-list"> -->
+        <!-- <h1 >Monthly Attendance Report Generation</h1> -->
         <!-- Add your report content here -->
-        <p>This report provides an overview of the monthly attendance records for all students. Here, you can generate reports in Excel and PDF formats according to your needs..</p>
+        <!-- <p>This report provides an overview of the monthly attendance records for all students. Here, you can generate reports in Excel and PDF formats according to your needs..</p> -->
 
       <!-- Card 5 -->
- <div   class="card">
-  <h2>Generate Execl Report</h2>
-  <p>Click Here to Download Execl Report in csv Format </p>
-  <a href="/generate-excel-report?username=<%= username %>" target="_blank" class="report-link report-excel">Download Excel Report <i class="fas fa-file-excel"></i></a>
-</div>
+ <!-- <div   class="card"> -->
+  <!-- <h2>Generate Execl Report</h2> -->
+  <!-- <p>Click Here to Download Execl Report in csv Format </p> -->
+  <!-- <a href="/generate-excel-report?username=<%= username %>" target="_blank" class="report-link report-excel">Download Excel Report <i class="fas fa-file-excel"></i></a> -->
+<!-- </div> -->
 
   <!-- Card 5 -->
-  <div   class="card">
-    <h2>Generate PDF Report</h2>
-    <p>Click Here to Download PDF Attendance Report </p>
-    <a href="/generate-pdf-report?username=<%= username %>" class="report-link report-pdf" target="_blank">Download PDF Report <i class="fas fa-file-pdf"></i></a>
-  </div>
+  <!-- <div   class="card"> -->
+    <!-- <h2>Generate PDF Report</h2> -->
+    <!-- <p>Click Here to Download PDF Attendance Report </p> -->
+    <!-- <a href="/generate-pdf-report?username=<%= username %>" class="report-link report-pdf" target="_blank">Download PDF Report <i class="fas fa-file-pdf"></i></a> -->
+  <!-- </div> -->
 
-        <!-- <div class="report-actions"> -->
-          <!-- <a href="/generate-excel-report?username=<%= username %>" target="_blank" class="report-link report-excel">Download Excel Report <i class="fas fa-file-excel"></i></a> -->
-          <!-- <a href="/generate-pdf-report?username=<%= username %>" class="report-link report-pdf" target="_blank">Download PDF Report <i class="fas fa-file-pdf"></i></a> -->
+                     <!-- <div class="report-actions"> -->
+                               <!-- <a href="/generate-excel-report?username=<%= username %>" target="_blank" class="report-link report-excel">Download Excel Report <i class="fas fa-file-excel"></i></a> -->
+                                <!-- <a href="/generate-pdf-report?username=<%= username %>" class="report-link report-pdf" target="_blank">Download PDF Report <i class="fas fa-file-pdf"></i></a> -->
           
-        <!-- </div> -->
+              <!-- </div> -->
       
-    </section>
+    <!-- </section> -->
 
     <section class="students" style="display:none;">
       <!-- Students content -->
@@ -627,20 +630,20 @@ document.getElementById('profile-icon').addEventListener('click', function(event
     document.querySelector('.take-attendance-btn').style.display = 'block';
   });
 
-  document.getElementById('report-link').addEventListener('click', function(event) {
-    event.preventDefault();
+  // document.getElementById('report-link').addEventListener('click', function(event) {
+    // event.preventDefault();
     // Update heading
-    document.querySelector('.main-top h1').innerText = 'Report';
+    // document.querySelector('.main-top h1').innerText = 'Report';
     // Hide all sections
-    hideAllSections();
+    // hideAllSections();
     // Show report section
-    document.querySelector('.report').style.display = 'block';
-  });
+    // document.querySelector('.report').style.display = 'block';
+  // });
 
   document.getElementById('attendance-link').addEventListener('click', function(event) {
     event.preventDefault();
     // Update heading
-    document.querySelector('.main-top h1').innerText = 'View Attendance';
+    document.querySelector('.main-top h1').innerText = 'View Attendance List & Report Generation';
     // Hide all sections
     hideAllSections();
     // Show attendance section
@@ -693,7 +696,7 @@ function hideAllSections() {
   document.getElementById('welcome').style.display = 'none';
   document.querySelector('.welcome-message').style.display = 'none';
   document.querySelector('.take-attendance-btn').style.display = 'none';
-  document.querySelector('.report').style.display = 'none';
+  // document.querySelector('.report').style.display = 'none';
   document.querySelector('.attendance').style.display = 'none';
   document.querySelector('.students').style.display = 'none';
   document.querySelector('.profile').style.display = 'none'; // Updated class reference
@@ -790,8 +793,8 @@ function generateAttendancePercentagePDF() {
     const totalClasses = document.getElementById('totalClassesInput').value;
     const username = '<%= username %>'; // Assuming username is available in your EJS template
 
-    // Redirect to the server route that generates the PDF
-    window.location.href = `/generate-attendance-percentage-pdf?subject=${subject}&totalClasses=${totalClasses}&username=${username}`;
+    // Open the server route that generates the PDF in a new tab
+    window.open(`/generate-attendance-percentage-pdf?subject=${subject}&totalClasses=${totalClasses}&username=${username}`, '_blank');
 }
 
 
@@ -1049,12 +1052,8 @@ function exportAttendanceToPDF() {
     .then(response => response.blob())
     .then(blob => {
         const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = "attendance_report.pdf";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+        window.open(url, '_blank'); // Opens the PDF in a new tab
+        window.URL.revokeObjectURL(url); // Optional: Clean up the object URL after opening
     })
     .catch(error => console.error('Error exporting PDF:', error));
 }

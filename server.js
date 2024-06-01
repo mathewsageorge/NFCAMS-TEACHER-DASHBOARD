@@ -319,6 +319,10 @@ app.get('/generate-pdf-report', async (req, res) => {
             drawBorder();
         });
 
+        // Add report generation date and time
+        const reportDateTime = new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
+        doc.fontSize(14).text(`NFCAMS Report Generated On: ${reportDateTime}`, { align: 'center' }).moveDown(2);
+
         let currentDate = null;
 
         attendanceData.forEach(data => {
@@ -512,6 +516,10 @@ app.get('/generate-attendance-percentage-pdf', async (req, res) => {
             drawBorderAndWatermark();
         });
 
+        // Add report generation date and time
+        const reportDateTime = new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
+        doc.fontSize(14).opacity(1).text(`Report Generated On: ${reportDateTime}`, { align: 'center' }).moveDown(2);
+
         doc.fontSize(14).opacity(1).text('NFCAMS-Attendance Percentage Report', { align: 'center' }).moveDown();
         doc.text(`Subject: ${subject}`).moveDown();
         doc.text(`Total Classes: ${totalClasses}`).moveDown(2);
@@ -557,8 +565,10 @@ app.post('/export-attendance-to-pdf', async (req, res) => {
             drawBorder();
         });
 
+        // Add report generation date and time
+        const reportDateTime = new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
         doc.font('Helvetica-Bold').fontSize(16).text('NFCAMS-Custom Attendance Report', { align: 'center' }).moveDown();
-        doc.fontSize(12);
+        doc.fontSize(12).text(`Report Generated On: ${reportDateTime}`, { align: 'center' }).moveDown(2);
 
         // Define table headers and adjust column widths
         const headers = ["Date", "Time", "Student Name", "Subject/Class", "Period"];
@@ -567,10 +577,10 @@ app.post('/export-attendance-to-pdf', async (req, res) => {
         const startY = doc.y;
         const startX = doc.x;
 
-       // Draw headers
-       headers.forEach((header, i) => {
-        doc.font('Helvetica-Bold').text(header, startX + sumPreviousWidths(i, columnWidths), startY, { width: columnWidths[i], align: 'left' });
-    });
+        // Draw headers
+        headers.forEach((header, i) => {
+            doc.font('Helvetica-Bold').text(header, startX + sumPreviousWidths(i, columnWidths), startY, { width: columnWidths[i], align: 'left' });
+        });
 
         // Move to next row
         doc.moveDown(1.5);
