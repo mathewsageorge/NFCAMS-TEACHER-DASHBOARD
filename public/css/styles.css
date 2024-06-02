@@ -492,39 +492,62 @@ table thead tr {
 
 /* Add this CSS code in your existing styles.css or within the <style> tag in the head section */
 
-.card-container {
-  display: flex; /* Set the container as a flex container */
-  justify-content: space-between; /* Distribute items along the main axis with equal space between them */
-}
-
 .card {
-  width: calc(50% - 10px); /* Set the width of each card to occupy half the container width with some margin */
-  background-color: #f0f0f0;
-  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
-  background-image: url('/images/DCD.png'); /* Add the background image */
-  background-size: cover; /* Cover the entire background */
-  background-position: center; /* Center the background image */
-  height: 180px;
-}
-
-.card h2 {
-  margin-top: 0;
-}
-
-.card p {
-  margin-bottom: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 45%;
+  border-radius: 15px;
+  display: inline-block;
+  margin: 20px;
+  padding: 30px;
+  background: linear-gradient(135deg, #f9f9f9, #e0e0e0);
+  overflow: hidden;
+  position: relative;
 }
 
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  transform: translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
-.card-content {
-  margin-bottom: 10px;
+.card h2 {
+  color: #333;
+  font-size: 26px;
+  margin-bottom: 15px;
+  font-family: 'Poppins', sans-serif;
+  transition: color 0.3s ease;
 }
+
+.card p {
+  color: #555;
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.card button {
+  background: linear-gradient(135deg, #34AF6D, #2E8B57);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.card button:hover {
+  background: linear-gradient(135deg, #4AD489, #3CB371);
+  transform: translateY(-2px);
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
 
 .refresh-btn {
   background-color: #34AF6D;
@@ -607,34 +630,7 @@ table thead tr {
   background-color: #45a049;
 }
 
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width: 40%;
-  border-radius: 5px;
-  display: inline-block;
-  margin: 10px;
-  padding: 20px;
-  background-color: #f2f2f2;
-}
 
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.card h2 {
-  color: #333;
-}
-
-.card p {
-  color: #666;
-}
-
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
 
 * CSS for enhanced report links */
 .report-actions {
@@ -784,7 +780,7 @@ table thead tr {
 }
 
 .message-form .btn-send {
-  background-color: #007BFF;
+  background-color: #34AF6D;
   color: white;
   padding: 15px 25px;
   border: none;
@@ -900,7 +896,7 @@ table thead tr {
 
 .subject-title {
   font-size: 18px;
-  color: #007bff; /* Bootstrap primary color */
+  color: black; /* Bootstrap primary color */
   margin-bottom: 10px;
 }
 
@@ -1061,7 +1057,7 @@ table thead tr {
 }
 
 .section-title {
-  color: #007bff;
+  color: #34AF6D;
   font-size: 20px;
   margin-bottom: 15px;
 }

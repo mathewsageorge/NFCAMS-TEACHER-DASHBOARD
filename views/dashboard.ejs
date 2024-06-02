@@ -72,7 +72,7 @@
 
     <section class="main">
       <div class="main-top">
-        <h1>Welcome to Dashboard</h1>
+        <h1>Welcome to NFCAMS Teacher Dashboard</h1>
         <i class="fas fa-user-circle" id="profile-icon"></i> <!-- Updated icon -->
       </div>
 
@@ -89,7 +89,7 @@
  <!-- Card 3 -->
  <div class="card">
   <h2>Take Attendance Using NFC</h2>
-  <p>Click Here to Attendance Using NFC</p>
+  <p>Click Here to take Attendance Using NFC Technolgy</p>
   <button onclick="takeAttendance()" class="secondary-button take-attendance-btn report-link" style="display: block;">Take Attendance Using NFC</button>
 </div>
 
@@ -1053,7 +1053,7 @@ function exportAttendanceToPDF() {
     .then(blob => {
         const url = window.URL.createObjectURL(blob);
         window.open(url, '_blank'); // Opens the PDF in a new tab
-        window.URL.revokeObjectURL(url); // Optional: Clean up the object URL after opening
+        // window.URL.revokeObjectURL(url); // Optional: Clean up the object URL after opening
     })
     .catch(error => console.error('Error exporting PDF:', error));
 }
