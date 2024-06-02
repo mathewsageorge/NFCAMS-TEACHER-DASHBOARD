@@ -394,31 +394,23 @@
       <div class="attendance-percentage-content">
         <h1>Calculate Attendance Percentage Based on Subject</h1><br>
         
-        
-        <!-- <label for="">Subject: (Format for entering below input : <b> <span class="sub"> SUBJECT</span></span><span class="hai">CLASS</span> Example:CDS6)</b></label> -->
-        <!-- <input  type="text" id="subjectInput" name="subject" placeholder="FORMAT:CDS6/AADS6/CGIPS6/PYTHONS6"  required><br> -->
-        
         <label for="subjectInput" class="sub">Select Subject:</label>
-      <select id="subjectInput" class="select-styled">
-        <option value="">All Subjects</option>
-        <% subjects.forEach(subject => { %>
-            <option value="<%= subject %>"><%= subject %></option>
-        <% }); %>
-      </select><BR></BR>
-
-
-
-        
+        <select id="subjectInput" class="select-styled">
+          <option value="">All Subjects</option>
+          <% subjects.forEach(subject => { %>
+              <option value="<%= subject %>"><%= subject %></option>
+          <% }); %>
+        </select><br><br>
+    
         <label for="totalClassesInput">Total Classes Conducted:</label>
         <input type="number" id="totalClassesInput" name="totalClasses" placeholder="Enter Total Classes Conducted for Above Subject (Total Hours Taken)" required readonly>
         <button onclick="calculateAttendancePercentage()" class="secondary-button">Calculate</button>
-       <!-- Spinner HTML with a unique class name -->
-<div id="attendanceLoadingIndicator" class="attendanceSpinner" style="display: none;"></div>
+        <div id="attendanceLoadingIndicator" class="attendanceSpinner" style="display: none;"></div>
         
-        <!-- Predefined table structure -->
         <div id="attendancePercentageResults" style="display: none;">
           <table class="table" id="attendancePercentageTable">
             <button onclick="generateAttendancePercentagePDF()" class="secondary-button">Generate PDF Report</button>
+            <button onclick="sendLowAttendanceEmails()" class="secondary-button">Send Low Attendance Emails</button>
             <thead>
               <tr>
                 <th>Student Name</th>
@@ -426,13 +418,18 @@
               </tr>
             </thead>
             <tbody>
-              
               <!-- Data will be inserted here dynamically -->
             </tbody>
           </table>
         </div>
       </div>
     </section>
+
+    <!-- Add the spinner element -->
+<div id="emailLoadingSpinner" style="display: none;">
+  <div class="spinnerr"></div>
+</div>
+
 
   <section class="announcements" style="display:none;">
   <div class="announcements-container">
@@ -1157,6 +1154,63 @@ socket.on('attendanceDeleted', function(id) {
         }
     });
 });
+
+
+
+  function sendLowAttendanceEmails() {
+    const rows = document.querySelectorAll("#attendancePercentageTable tbody tr");
+    const lowAttendanceStudents = Array.from(rows).map(row => {
+      const columns = row.querySelectorAll("td");
+      return {
+        studentName: columns[0].innerText,
+        percentage: parseFloat(columns[1].innerText)
+      };
+    });
+
+    const totalClasses = parseInt(document.getElementById('totalClassesInput').value);
+    const subject = document.getElementById('subjectInput').value;
+
+    // Filter students with attendance below 75%
+    const studentsBelow75 = lowAttendanceStudents.filter(student => student.percentage < 75);
+
+    if (studentsBelow75.length === 0) {
+      alert('No students in the list have attendance below 75%.');
+      return;
+    }
+
+    // Show the loading spinner
+    document.getElementById('emailLoadingSpinner').style.display = 'block';
+
+    fetch('/send-low-attendance-emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ lowAttendanceStudents: studentsBelow75, totalClasses, subject })
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Hide the loading spinner
+      document.getElementById('emailLoadingSpinner').style.display = 'none';
+
+      if (data.success) {
+        alert('Emails sent successfully');
+      } else {
+        alert('Failed to send emails');
+      }
+    })
+    .catch(error => {
+      // Hide the loading spinner
+      document.getElementById('emailLoadingSpinner').style.display = 'none';
+
+      console.error('Error sending emails:', error);
+      alert('Failed to send emails');
+    });
+  }
+
+
+
+
 
   </script>
 </body>

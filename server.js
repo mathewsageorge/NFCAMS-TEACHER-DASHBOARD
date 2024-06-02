@@ -694,6 +694,53 @@ app.post('/set-class-count', async (req, res) => {
     }
 });
 
+app.post('/send-low-attendance-emails', async (req, res) => {
+    const { lowAttendanceStudents, totalClasses, subject } = req.body;
+  
+    // Check if lowAttendanceStudents is an array
+    if (!Array.isArray(lowAttendanceStudents)) {
+      return res.status(400).json({ success: false, message: 'Invalid data format' });
+    }
+  
+    // Define email addresses for students within the route
+    const studentEmails = {
+      'Mathews A George': 'mathewsgeorge2003@gmail.com',
+      'Ansu Rose Joseph': 'ansurose41@gmail.com',
+      'Keshav Umesh': 'parent.johnson@example.com',
+      'Neha Sara Cherian': 'parent.brown@example.com'
+      // Add more students as needed
+    };
+  
+    // Send emails to each student/parent
+    for (const student of lowAttendanceStudents) {
+      if (student.percentage < 75) {
+        const email = studentEmails[student.studentName];
+        if (email) {
+          const mailOptions = {
+            from: 'NFAMS',
+            to: email,
+            subject: 'Low Attendance Alert',
+            html: `
+              <p><strong>Dear ${student.studentName}</srrong>,</p>
+              <p>Your attendance for the subject <strong>${subject}</strong> is currently <strong>${student.percentage}%</strong>.A minimum attendance of <strong>75%</strong> is required. Please make sure to attend the upcoming classes regularly.</p>
+              <p>If you have any concerns or need assistance, feel free to reach out to your teacher or academic advisor.</p>
+              <p>Best regards,<br><strong>NFCAMS</strong></p>
+            `
+          };
+  
+          try {
+            await transporter.sendMail(mailOptions);
+          } catch (error) {
+            console.error('Error sending email:', error);
+            return res.status(500).json({ success: false, message: 'Failed to send emails' });
+          }
+        }
+      }
+    }
+  
+    res.json({ success: true, message: 'Emails sent successfully' });
+  });
+
 // Start server
 server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
