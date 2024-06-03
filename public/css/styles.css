@@ -416,6 +416,9 @@ table thead tr {
 
 /*add Manually Add Attendance*/
 
+
+/*add Manually Add Attendance*/
+
 .overlay {
   position: fixed;
   top: 0;
@@ -433,42 +436,44 @@ table thead tr {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
+  padding: 30px; /* Increased padding for a more spacious feel */
+  border-radius: 12px; /* Increased border radius for a more modern look */
   z-index: 1000; /* Ensure it's above the overlay */
   display: none; /* Initially hidden */
-   /* Existing styles */
-  /* Add padding */
-  padding: 20px;
-  /* Add border */
-  border: 1px solid #ccc;
-  /* Add box-shadow for depth */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  /* Make it more centered */
   width: 80%;
   max-width: 500px;
   margin: 0 auto;
-  background-color: #fff;
-  /* Add rounded corners */
-  border-radius: 10px;
-  
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+  animation: fadeIn 0.3s ease-in-out; /* Smooth fade-in animation */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .attendance-form-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+  border-bottom: 1px solid #eee; /* Lighter border for a cleaner look */
+  padding-bottom: 15px; /* Increased padding for better spacing */
+  margin-bottom: 20px; /* Increased margin for better spacing */
 }
 
 .close-btn {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 24px; /* Slightly larger for better visibility */
   color: #555;
+  transition: color 0.3s ease; /* Smooth color transition */
 }
 
 .close-btn:hover {
@@ -478,18 +483,62 @@ table thead tr {
 .attendance-form-container input[type="text"],
 .attendance-form-container input[type="datetime-local"],
 .attendance-form-container select {
-  /* Add rounded corners */
-  border-radius: 5px;
-  /* Add padding */
-  padding: 8px;
-  /* Add border */
-  border: 1px solid #ccc;
-  /* Add margin-bottom for spacing */
-  margin-bottom: 10px;
-  /* Add box-sizing to include padding and border in width calculation */
+  border-radius: 8px; /* Increased border radius for a more modern look */
+  padding: 12px; /* Increased padding for better touch targets */
+  border: 1px solid #ddd; /* Lighter border for a cleaner look */
+  margin-bottom: 15px; /* Increased margin for better spacing */
   box-sizing: border-box;
+  font-size: 16px; /* Increased font size for better readability */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
 }
 
+.attendance-form-container input[type="text"]:focus,
+.attendance-form-container input[type="datetime-local"]:focus,
+.attendance-form-container select:focus {
+  border-color: #34AF6D; /* Green border on focus */
+  box-shadow: 0 0 8px rgba(52, 175, 109, 0.2); /* Subtle shadow on focus */
+}
+
+.attendance-form-container button {
+  background-color: #34AF6D; /* Green background */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px; /* Increased border radius for a more modern look */
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+}
+
+.attendance-form-container button:hover {
+  background-color: #4AD489; /* Lighter green on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Add a decorative element */
+.attendance-form-container::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 5px;
+  background-color: #34AF6D;
+  border-radius: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .attendance-form-container {
+    padding: 20px;
+  }
+
+  .attendance-form-container button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
 /* Add this CSS code in your existing styles.css or within the <style> tag in the head section */
 
 .card {
@@ -670,42 +719,127 @@ table thead tr {
  /* Additional CSS can go here */
  .attendance-percentage-content label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   color: #333;
   font-weight: bold;
+  font-family: 'Poppins', sans-serif;
 }
 
 .attendance-percentage-content input[type="text"],
 .attendance-percentage-content input[type="number"] {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box; /* Makes sure padding does not affect overall width */
+  border-radius: 8px;
+  box-sizing: border-box;
   font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.attendance-percentage-content input[type="text"]:focus,
+.attendance-percentage-content input[type="number"]:focus {
+  border-color: #34AF6D;
+  box-shadow: 0 0 8px rgba(52, 175, 109, 0.2);
 }
 
 .attendance-percentage-content button.secondary-button {
   background-color: #34AF6D;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 25px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .attendance-percentage-content button.secondary-button:hover {
   background-color: #45a049;
+  transform: translateY(-2px);
 }
 
-.hai{
+.hai {
   color: red;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
 }
 
-.sub{
+.sub {
   color: #0056b3;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+/* Enhanced and modernized styles */
+.attendance-percentage-content {
+  background: linear-gradient(135deg, #f9f9f9, #e0e0e0);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.attendance-percentage-content:hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.attendance-percentage-content label {
+  color: #333;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 8px;
+}
+
+.attendance-percentage-content input[type="text"],
+.attendance-percentage-content input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.attendance-percentage-content input[type="text"]:focus,
+.attendance-percentage-content input[type="number"]:focus {
+  border-color: #34AF6D;
+  box-shadow: 0 0 8px rgba(52, 175, 109, 0.2);
+}
+
+.attendance-percentage-content button.secondary-button {
+  background-color: #34AF6D;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.attendance-percentage-content button.secondary-button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.hai {
+  color: red;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+.sub {
+  color: #0056b3;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
 }
 
 /* NEWWW */
@@ -746,7 +880,7 @@ table thead tr {
 
 /* Enhanced Message Form Styles */
 .messages-content {
-  max-width: 700px;
+  max-width: 90%;
   margin: 40px auto;
   padding: 30px;
   background: #f9f9f9;
@@ -754,7 +888,23 @@ table thead tr {
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   font-family: 'Poppins', sans-serif;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  position: relative;
 }
+
+/* Enhanced Message Form Styles */
+.messages-content {
+  max-width: 90%;
+  margin: 40px auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #f9f9f9, #e0e0e0);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  font-family: 'Poppins', sans-serif;
+  transition: transform 0.3s ease-in-out,transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  position: relative;
+}
+
+
 
 .messages-content:hover {
   transform: scale(1.02);
@@ -826,28 +976,68 @@ table thead tr {
   transform: translateY(-2px);
 }
 
+/* Add a decorative element */
+.messages-content::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 5px;
+  background-color: #34AF6D;
+  border-radius: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .messages-content {
+    padding: 20px;
+  }
+
+  .message-form .btn-send, .btn-reset {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 1000; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+  backdrop-filter: blur(5px); /* Blur the background */
 }
 
 /* Modal Content */
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 50%;
-  height: 20%; /* Could be more or less, depending on screen size */
+  background-color: #fff;
+  margin: 10% auto; /* 10% from the top and centered */
+  padding: 30px;
+  border-radius: 12px;
+  width: 40%;
+  max-width: 600px; /* Max width for larger screens */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: slide-down 0.5s ease-out; /* Slide down animation */
+  position: relative;
+}
+
+/* Slide down animation */
+@keyframes slide-down {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* The Close Button */
@@ -856,13 +1046,60 @@ table thead tr {
   float: right;
   font-size: 28px;
   font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
+  color: #333;
   text-decoration: none;
   cursor: pointer;
+}
+
+/* Additional styling for modal content */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.modal-body {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  margin-top: 20px;
+}
+
+.modal-footer .btn {
+  background-color: #34AF6D;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-left: 10px;
+}
+
+.modal-footer .btn:hover {
+  background-color: #2e8b57;
+  transform: translateY(-2px);
 }
 
 .low-attendance-container {
@@ -982,13 +1219,15 @@ table thead tr {
 
 .spinner {
   border: 6px solid rgba(255, 255, 255, 0.3);
-  width: 40px;
-  height: 40px;
+  width: 50px; /* Slightly larger for better visibility */
+  height: 50px; /* Slightly larger for better visibility */
   border-radius: 50%;
-  border-top-color: #3498db; /* Blue shade */
-  position: relative;
-  animation: spin 1s ease-in-out infinite;
-  -webkit-animation: spin 1s ease-in-out infinite;
+  border-top-color: #34AF6D; /* Green shade */
+  position: fixed; /* Center the spinner */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite; /* Smooth and bouncy spin */
 }
 
 @keyframes spin {
@@ -1105,5 +1344,190 @@ table thead tr {
 
 
 
+/* Main Section Buttons */
+.users .card button,
+.table button,
+.attendance button.secondary-button,
+.students button.secondary-button,
+.secondary-button-add,
+.modal-footer .btn {
+  background: linear-gradient(135deg, #34AF6D, #2E8B57);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+.users .card button:hover,
+.table button:hover,
+.attendance button.secondary-button:hover,
+.students button.secondary-button:hover,
+.secondary-button-add:hover,
+.modal-footer .btn:hover {
+  background: linear-gradient(135deg, #4AD489, #3CB371);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Take Attendance and Manually Add Buttons */
+.take-attendance-btn,
+.manually-add {
+  background: linear-gradient(135deg, #000000, #434343);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.take-attendance-btn:hover,
+.manually-add:hover {
+  background: linear-gradient(135deg, #434343, #666666);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Refresh Button */
+.refresh-btn {
+  background: linear-gradient(135deg, #34AF6D, #2E8B57);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.refresh-btn:hover {
+  background: linear-gradient(135deg, #4AD489, #3CB371);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Message Form Buttons */
+.message-form .btn-send,
+.btn-reset {
+  background: linear-gradient(135deg, #34AF6D, #2E8B57);
+  color: white;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.message-form .btn-send:hover,
+.btn-reset:hover {
+  background: linear-gradient(135deg, #4AD489, #3CB371);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Secondary Button */
+.secondary-button {
+  background: linear-gradient(135deg, #34AF6D, #2E8B57);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.secondary-button:hover {
+  background: linear-gradient(135deg, #4AD489, #3CB371);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Report Link */
+.report-link {
+  background: linear-gradient(135deg, #34AF6D, #2E8B57);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.report-link:hover {
+  background: linear-gradient(135deg, #4AD489, #3CB371);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.notification {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 15px 30px;
+  z-index: 1000;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  font-weight: bold;
+  transition: opacity 0.5s ease-in-out, top 0.5s ease-in-out;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 300px;
+}
+
+.notification.show {
+  display: flex;
+  top: 20px;
+  opacity: 1;
+}
+
+.notification.hide {
+  top: 0;
+  opacity: 0;
+}
+
+.notification .close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.notification.success {
+  background-color: #4CAF50; /* Green */
+}
+
+.notification.error {
+  background-color: #f44336; /* Red */
+}
 

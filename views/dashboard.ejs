@@ -16,6 +16,13 @@
   <script src="/socket.io/socket.io.js"></script> <!-- Include socket.io client -->
 </head>
 <body>
+
+   <!-- Notification element -->
+    <!-- Floating notification element -->
+  <div id="notification" class="notification">
+    <span id="notification-message"></span>
+    <button class="close-btn" onclick="closeNotification()">&times;</button>
+  </div>
   <div class="container">
     <nav>
       <ul>
@@ -965,6 +972,8 @@ function refreshPage() {
     location.reload();
 }
 
+
+
 function deleteAttendance(id, username) {
     // Confirmation dialog
     const isConfirmed = confirm('Are you sure you want to delete this data?');
@@ -982,22 +991,43 @@ function deleteAttendance(id, username) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('Record deleted successfully');
+                showNotification('Record deleted successfully', 'success');
                 // Optionally, refresh the page or remove the row from the table
-                
             } else {
-                alert('Failed to delete record');
+                showNotification('Failed to delete record', 'error');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Failed to delete record');
+            showNotification('Failed to delete record', 'error');
         });
     } else {
         // If the user clicked Cancel, do nothing
         console.log('Deletion cancelled by user.');
     }
 }
+
+function showNotification(message, type) {
+    const notification = document.getElementById('notification');
+    const notificationMessage = document.getElementById('notification-message');
+    notificationMessage.textContent = message;
+    notification.className = `notification ${type}`;
+    notification.classList.add('show');
+    notification.classList.remove('hide');
+
+    setTimeout(() => {
+        notification.classList.add('hide');
+        notification.classList.remove('show');
+    }, 3000); // Show for 3 seconds
+}
+
+function closeNotification() {
+    const notification = document.getElementById('notification');
+    notification.classList.add('hide');
+    notification.classList.remove('show');
+}
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     var recipientTypeDropdown = document.getElementById('recipientType');
@@ -1174,7 +1204,7 @@ socket.on('attendanceDeleted', function(id) {
     const studentsBelow75 = lowAttendanceStudents.filter(student => student.percentage < 75);
 
     if (studentsBelow75.length === 0) {
-      alert('No students in the list have attendance below 75%.');
+      showNotification('No students in the list have attendance below 75%.');
       return;
     }
 
@@ -1194,9 +1224,9 @@ socket.on('attendanceDeleted', function(id) {
       document.getElementById('emailLoadingSpinner').style.display = 'none';
 
       if (data.success) {
-        alert('Emails sent successfully');
+        showNotification('Emails sent successfully');
       } else {
-        alert('Failed to send emails');
+        showNotification('Failed to send emails');
       }
     })
     .catch(error => {
