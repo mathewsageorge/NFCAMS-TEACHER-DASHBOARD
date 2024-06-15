@@ -1487,7 +1487,7 @@ table thead tr {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #4CAF50; /* Green */
+  background: linear-gradient(135deg, #4AD489, #3CB371);
   color: white;
   padding: 15px 30px;
   z-index: 1000;
@@ -1530,4 +1530,17 @@ table thead tr {
 .notification.error {
   background-color: #f44336; /* Red */
 }
+
+
+    /* Style for the search input */
+    #searchInput {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 12px 0;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
 

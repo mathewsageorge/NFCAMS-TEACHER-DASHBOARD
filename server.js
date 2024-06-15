@@ -46,9 +46,12 @@ const transporter = nodemailer.createTransport({
 // Define student data with parent emails
 const studentParentData = [
     { studentName: "Mathews A George", class: "CSES6", studentEmail: "pta21cs044@cek.ac.in", parentEmail: "mathewsgeorge2003@gmail.com" },
-    { studentName: "Ansu Rose Joseph", class: "CSES6", studentEmail: "jane.smith@example.com", parentEmail: "parent.smith@example.com" },
-    { studentName: "Keshav Umesh", class: "CSES6", studentEmail: "alice.johnson@example.com", parentEmail: "parent.johnson@example.com" },
-    { studentName: "Neha Sara Cherian", class: "CSES5", studentEmail: "bob.brown@example.com", parentEmail: "parent.brown@example.com" }
+    { studentName: "Ansu Rose Joseph", class: "CSES6", studentEmail: "ansurose41@gmail.com", parentEmail: "ansurose41@gmail.com" },
+    { studentName: "Keshav Umesh", class: "CSES6", studentEmail: "keshavumesh001@gmail.com", parentEmail: "keshavumesh001@gmail.com" },
+    { studentName: "Neha Sara Cherian", class: "CSES6", studentEmail: "nehacherian570@gmail.com", parentEmail: "nehacherian570@gmail.com" },
+    { studentName: "Adwaith J", class: "CSES4", studentEmail: "nehacherian570@gmail.com", parentEmail: "nehacherian570@gmail.com" },
+    { studentName: "Sonu Jacob Jose", class: "CSES4", studentEmail: "nehacherian570@gmail.com", parentEmail: "nehacherian570@gmail.com" }
+    // { studentName: "Neha Sara Cherian", class: "CSES6", studentEmail: "nehacherian570@gmail.com", parentEmail: "nehacherian570@gmail.com" }
 ];
 
 // Route to get students by class
@@ -706,8 +709,10 @@ app.post('/send-low-attendance-emails', async (req, res) => {
     const studentEmails = {
       'Mathews A George': 'mathewsgeorge2003@gmail.com',
       'Ansu Rose Joseph': 'pta21cs044@cek.ac.in',
-      'Keshav Umesh': 'parent.johnson@example.com',
-      'Neha Sara Cherian': 'parent.brown@example.com'
+      'Keshav Umesh': 'keshavumesh001@gmail.com',
+      'Neha Sara Cherian': 'nehacherian570@gmail.com',
+      'Adwaith J': 'nehacherian570@gmail.com',
+      'Sonu Jacob Jose': 'nehacherian570@gmail.com'
       // Add more students as needed
     };
   
@@ -719,9 +724,9 @@ app.post('/send-low-attendance-emails', async (req, res) => {
           const mailOptions = {
             from: 'NFAMS',
             to: email,
-            subject: 'Low Attendance Alert',
+            subject: 'NFCAMS-Low Attendance Alert',
             html: `
-              <p><strong>Dear ${student.studentName}</srrong>,</p>
+              <p>Dear<strong> ${student.studentName}</srrong>,</p>
               <p>Your attendance for the subject <strong>${subject}</strong> is currently <strong>${student.percentage}%</strong>.A minimum attendance of <strong>75%</strong> is required. Please make sure to attend the upcoming classes regularly.</p>
               <p>If you have any concerns or need assistance, feel free to reach out to your teacher or academic advisor.</p>
               <p>Best regards,<br><strong>NFCAMS</strong></p>

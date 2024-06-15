@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   <style>
     /* Additional CSS can go here */
    
@@ -175,92 +176,84 @@
 
         
       </div>
-   
-   <!-- Attendance content -->
-   <section class="attendance" style="display:none;">
-    <!-- Add the refresh icon -->
-    <button onclick="refreshPage()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
 
-   <div class="attendance-list">
-       <h1>Attendance List of Students</h1>
-       <br>
-       <p>Total Present: <span id="totalPresentCount" class="total-present-count">0</span></p>
-       <br>
-       <!-- Button to select date -->
-       <label for="attendanceDate">Select Date: </label>
-       <input type="date" id="attendanceDate">
-       <!-- Enhanced select input for subject with modern styling -->
-<div class="select-container">
- <label for="attendanceSubject" class="select-label">Select Subject:</label>
- <select id="attendanceSubject" class="select-styled">
-     <option value="">All Subjects</option>
-     <% subjects.forEach(subject => { %>
-         <option value="<%= subject %>"><%= subject %></option>
-     <% }); %>
- </select>
-</div>
 
-<!-- Enhanced select input for period with modern styling -->
-<div class="select-container">
- <label for="attendancePeriod" class="select-label">Select Period:</label>
- <select id="attendancePeriod" class="select-styled">
-     <option value="">All Periods</option>
-     <option value="Period 1">Period 1</option>
-     <option value="Period 2">Period 2</option>
-     <option value="Period 3">Period 3</option>
-     <option value="Period 4">Period 4</option>
-     <option value="Period 5">Period 5</option>
-     <option value="Period 6">Period 6</option>
-     <!-- Add more options for other periods as needed -->
- </select>
-</div>
+<!-- Attendance content -->
+<section class="attendance" style="display:none;">
+  <!-- Add the refresh icon -->
+  <button onclick="refreshPage()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
 
-       <button onclick="displayAttendanceByDateAndSubjectandPeriod()" class="secondary-button">Display Attendance</button>
-       <button onclick="exportAttendanceToPDF()" class="secondary-button">Export Table to PDF</button>
+  <div class="attendance-list">
+      <h1>Attendance List of Students</h1>
+      <br>
+      <p>Total Present: <span id="totalPresentCount" class="total-present-count">0</span></p>
+      <br>
+      <!-- Button to select date -->
+      <label for="attendanceDate">Select Date: </label>
+      <input type="date" id="attendanceDate">
+      <!-- Enhanced select input for subject with modern styling -->
+      <div class="select-container">
+          <label for="attendanceSubject" class="select-label">Select Subject:</label>
+          <select id="attendanceSubject" class="select-styled">
+              <option value="">All Subjects</option>
+              <% subjects.forEach(subject => { %>
+                  <option value="<%= subject %>"><%= subject %></option>
+              <% }); %>
+          </select>
+      </div>
 
-       <a href="/generate-excel-report?username=<%= username %>" target="_blank" class="report-link report-excel">Download Excel Report <i class="fas fa-file-excel"></i></a>
-       <a href="/generate-pdf-report?username=<%= username %>" class="report-link report-pdf" target="_blank">Download PDF Report <i class="fas fa-file-pdf"></i></a>
+      <!-- Enhanced select input for period with modern styling -->
+      <div class="select-container">
+          <label for="attendancePeriod" class="select-label">Select Period:</label>
+          <select id="attendancePeriod" class="select-styled">
+              <option value="">All Periods</option>
+              <option value="Period 1">Period 1</option>
+              <option value="Period 2">Period 2</option>
+              <option value="Period 3">Period 3</option>
+              <option value="Period 4">Period 4</option>
+              <option value="Period 5">Period 5</option>
+              <option value="Period 6">Period 6</option>
+              <!-- Add more options for other periods as needed -->
+          </select>
+      </div>
 
-       <table id="attendanceTable" class="table">
-         <thead>
-           <tr>
-             <th  style="position: relative;">Date </th>
-             <th  style="position: relative;">Time </th>
-             <th  style="position: relative;">Student Name</th>
-             <th  style="position: relative;">Subject</th>
-             <th  style="position: relative;">Period</th>
-             <!-- <th  style="position: relative;">Message </th> -->
-             <th  style="position: relative;">Delete </th>
-           </tr>
-         </thead>
-         <tbody>
-           <% attendanceData.forEach(data => { %>
-               <tr>
-                   <!-- Displaying date -->
-                   <td><%= data.time.toDateString() %></td>
-                   <!-- Displaying time -->
-                   <td><%= data.time.toLocaleTimeString() %></td>
-                   <td><%= data.studentName %></td>
-                   <td><%= data.subject %></td>
-                   <td><%= data.period %></td>
-                  
-                   <!-- <td> -->
-                     <!-- Message icon for each student -->
-                     <!-- <button onclick="sendMessage('<%= data.studentName %>')" class="message-btn"><i class="fas fa-envelope"></i></button> -->
-                   <!-- </td> -->
-                   <td>
-                    <!-- Ensure the button in your HTML correctly passes the ID -->
-<button onclick="deleteAttendance('<%= data._id %>', '<%= username %>')">Delete</button>
-                 </td>
-                  
-               </tr>
-           <% }); %>
-         </tbody>
-       </table>
-       <!-- Button to Export Attendance to PDF -->
-       
-     </div>
-   </section>
+      <button onclick="displayAttendanceByDateAndSubjectandPeriod()" class="secondary-button">Display Attendance</button>
+      <button onclick="exportAttendanceToPDF()" class="secondary-button">Export Table to PDF</button>
+
+      <a href="/generate-excel-report?username=<%= username %>" target="_blank" class="report-link report-excel">Download Excel Report <i class="fas fa-file-excel"></i></a>
+      <a href="/generate-pdf-report?username=<%= username %>" target="_blank" class="report-link report-pdf">Download PDF Report <i class="fas fa-file-pdf"></i></a>
+
+      <!-- Search input field -->
+      <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search for names..">
+
+      <table id="attendanceTable" class="table">
+          <thead>
+              <tr>
+                <th onclick="sortTable(0, this)">Date <i class="fas fa-sort" id="sortIcon0"></i></th>
+                <th onclick="sortTable(1, this)">Time <i class="fas fa-sort" id="sortIcon1"></i></th>
+                <th onclick="sortTable(2, this)">Student Name <i class="fas fa-sort" id="sortIcon2"></i></th>
+                <th onclick="sortTable(3, this)">Subject <i class="fas fa-sort" id="sortIcon3"></i></th>
+                <th onclick="sortTable(4, this)">Period <i class="fas fa-sort" id="sortIcon4"></i></th>
+                <th>Delete</th>
+              </tr>
+          </thead>
+          <tbody>
+              <% attendanceData.forEach(data => { %>
+                  <tr>
+                      <td><%= data.time.toDateString() %></td>
+                      <td><%= data.time.toLocaleTimeString() %></td>
+                      <td><%= data.studentName %></td>
+                      <td><%= data.subject %></td>
+                      <td><%= data.period %></td>
+                      <td>
+                          <button onclick="deleteAttendance('<%= data._id %>', '<%= username %>')">Delete</button>
+                      </td>
+                  </tr>
+              <% }); %>
+          </tbody>
+      </table>
+  </div>
+</section>
 
     <!-- <section class="report" style="display:none;"> -->
       <!-- Report content -->
@@ -352,7 +345,7 @@
   <select id="classSelect" class="form-control">
       <option value="">Select a Class</option>
       <option value="CSES6">CSE-S6</option>
-      <option value="CSES5">CSE-S5</option>
+      <option value="CSES4">CSE-S4</option>
   </select>
 </div>
 
@@ -362,7 +355,7 @@
   <select id="classSelect" class="form-control">
       <option value="">Select a Class</option>
       <option value="CSES6">CSE-S6</option>
-      <option value="CSES5">CSE-S5</option>
+      <option value="CSES4">CSE-S4</option>
   </select>
 </div>
 
@@ -502,8 +495,21 @@
   <script>
 
 function resetForm() {
-        document.getElementById('messageForm').reset();
-      }
+    // Reset the form fields to their default values
+    document.getElementById('messageForm').reset();
+
+    // Clear the dynamically added student list
+    const studentsList = document.getElementById('studentsList');
+    if (studentsList) {
+        studentsList.innerHTML = '';
+    }
+
+    // Optionally, hide the class selector if it should not be visible initially
+    const classSelector = document.getElementById('classSelector');
+    if (classSelector) {
+        classSelector.style.display = 'none';
+    }
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -1187,7 +1193,7 @@ socket.on('attendanceDeleted', function(id) {
 
 
 
-  function sendLowAttendanceEmails() {
+function sendLowAttendanceEmails() {
     const rows = document.querySelectorAll("#attendancePercentageTable tbody tr");
     const lowAttendanceStudents = Array.from(rows).map(row => {
       const columns = row.querySelectorAll("td");
@@ -1206,6 +1212,12 @@ socket.on('attendanceDeleted', function(id) {
     if (studentsBelow75.length === 0) {
       showNotification('No students in the list have attendance below 75%.');
       return;
+    }
+
+    // Ask user for confirmation before sending emails
+    const isConfirmed = confirm('Are you sure you want to send emails to students with low attendance?');
+    if (!isConfirmed) {
+      return; // Stop the function if user cancels
     }
 
     // Show the loading spinner
@@ -1238,8 +1250,83 @@ socket.on('attendanceDeleted', function(id) {
     });
   }
 
+  function searchTable() {
+        // Declare variables
+        var input, filter, table, tr, td, i, j, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("attendanceTable");
+        tr = table.getElementsByTagName("tr");
 
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+            tr[i].style.display = "none"; // Hide the row initially
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = ""; // Show the row if a match is found
+                        break; // Exit the loop once a match is found
+                    }
+                }
+            }
+        }
+    }
 
+    function sortTable(columnIndex, headerElement) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("attendanceTable");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    // Make a loop that will continue until no switching has been done:
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[columnIndex];
+            y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+        } else {
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
+    }
+    // Update the icon classes
+    updateSortIcons(columnIndex, dir);
+}
+
+function updateSortIcons(columnIndex, dir) {
+    var icons = document.querySelectorAll('.fa-sort, .fa-sort-up, .fa-sort-down');
+    icons.forEach(function(icon, index) {
+        icon.className = 'fas fa-sort'; // Reset all icons to default
+    });
+    var activeIcon = document.getElementById('sortIcon' + columnIndex);
+    if (dir === 'asc') {
+        activeIcon.className = 'fas fa-sort-up';
+    } else {
+        activeIcon.className = 'fas fa-sort-down';
+    }
+}
 
 
   </script>
