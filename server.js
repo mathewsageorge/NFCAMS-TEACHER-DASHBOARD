@@ -38,8 +38,8 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   service: 'gmail', // For example, if you're using Gmail
   auth: {
-    user: 'mathewsgeorge202@gmail.com',
-    pass: 'lhmw gvsd pydu wecj'
+    user: 'nfcamsofficial@gmail.com',
+    pass: 'tdrp soek zybx damz'
   }
 });
 
@@ -69,7 +69,11 @@ app.post('/send-message', upload.single('pdfFile'), async (req, res) => {
         from: 'your-email@example.com',
         to: recipients,
         subject: subject,
-        text: message,
+        html: `
+            <p style="font-size: 16px; color: #333; font-weight: bold;">${message}</p>
+            <p style="font-size: 12px; color: #999;">Best regards,<br>NFCAMS</p>
+              <p style="font-size: 10px; color: #999;">Copyright © 2024 NFCAMS. All rights reserved.</p>
+        `,
     };
 
     if (req.file) {
@@ -726,10 +730,11 @@ app.post('/send-low-attendance-emails', async (req, res) => {
             to: email,
             subject: 'NFCAMS-Low Attendance Alert',
             html: `
-              <p>Dear<strong> ${student.studentName}</srrong>,</p>
-              <p>Your attendance for the subject <strong>${subject}</strong> is currently <strong>${student.percentage}%</strong>.A minimum attendance of <strong>75%</strong> is required. Please make sure to attend the upcoming classes regularly.</p>
-              <p>If you have any concerns or need assistance, feel free to reach out to your teacher or academic advisor.</p>
-              <p>Best regards,<br><strong>NFCAMS</strong></p>
+              <p style="font-size: 18px; color: #333; font-weight: bold;">Dear ${student.studentName},</p>
+              <p style="font-size: 17px; color: #333;">Your attendance for the subject <b> ${subject} </b> is currently <b> ${student.percentage}% </b>. A minimum attendance of 75% is required. Please make sure to attend the upcoming classes regularly.</p>
+              <p style="font-size: 14px; color: #666;">If you have any concerns or need assistance, feel free to reach out to your teacher or academic advisor.</p>
+              <p style="font-size: 12px; color: #999;">Best regards,<br>NFCAMS</p>
+              <p style="font-size: 10px; color: #999;">Copyright © 2024 NFCAMS. All rights reserved.</p>
             `
           };
   
@@ -744,7 +749,7 @@ app.post('/send-low-attendance-emails', async (req, res) => {
     }
   
     res.json({ success: true, message: 'Emails sent successfully' });
-  });
+});
 
 // Start server
 server.listen(PORT, () => {
