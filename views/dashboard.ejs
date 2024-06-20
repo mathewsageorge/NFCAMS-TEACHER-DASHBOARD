@@ -239,14 +239,14 @@
           </thead>
           <tbody>
               <% attendanceData.forEach(data => { %>
-                  <tr>
+                 <tr data-id="<%= data._id %>">
                       <td><%= data.time.toDateString() %></td>
                       <td><%= data.time.toLocaleTimeString() %></td>
                       <td><%= data.studentName %></td>
                       <td><%= data.subject %></td>
                       <td><%= data.period %></td>
                       <td>
-                          <button onclick="deleteAttendance('<%= data._id %>', '<%= username %>')">Delete</button>
+                        <button onclick="deleteAttendance('<%= data._id %>', '<%= username %>')">Delete</button>
                       </td>
                   </tr>
               <% }); %>
@@ -324,7 +324,7 @@
 
     <section class="messages" style="display:none;">
       <button onclick="refreshPage()" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
-      <H1>You can send bulk SMS to parents informing them about their child’s performance, attendance, important dates, etc</H1>
+      <!-- <H1>You can send bulk SMS to parents informing them about their child’s performance, attendance, important dates, etc</H1> -->
       <div class="messages-content">
         <h2>Send a Message</h2>
         <form id="messageForm" action="/send-message" method="post" class="message-form" enctype="multipart/form-data">
@@ -1169,26 +1169,28 @@ populateSubjectsForTeacher(loggedInUsername);
 
 const socket = io(); // Connect to the WebSocket server
 
+// Join the room for the current user
+socket.emit('join', '<%= username %>');
+
 socket.on('attendanceAdded', function(attendance) {
-    const tbody = document.querySelector('#attendanceTable tbody');
-    const row = `<tr>
+    const table = document.getElementById('attendanceTable');
+    const row = document.createElement('tr');
+    row.innerHTML = `
         <td>${new Date(attendance.time).toDateString()}</td>
         <td>${new Date(attendance.time).toLocaleTimeString()}</td>
         <td>${attendance.studentName}</td>
         <td>${attendance.subject}</td>
         <td>${attendance.period}</td>
         <td><button onclick="deleteAttendance('${attendance._id}', '<%= username %>')">Delete</button></td>
-    </tr>`;
-    tbody.innerHTML += row; // Add new row to the table
+    `;
+    table.appendChild(row);
 });
 
 socket.on('attendanceDeleted', function(id) {
-    const rows = document.querySelectorAll('#attendanceTable tbody tr');
-    rows.forEach(row => {
-        if (row.querySelector('button').onclick.toString().includes(id)) {
-            row.remove(); // Remove the row from the table
-        }
-    });
+    const row = document.querySelector(`tr[data-id="${id}"]`);
+    if (row) {
+        row.remove();
+    }
 });
 
 

@@ -148,7 +148,8 @@ app.get('/', (req, res) => {
     res.render('login');
 });
 
-// server.js
+// Assuming you have a global object to track change streams
+const userChangeStreams = {};
 
 // Route for handling login and rendering dashboard with attendance and student data
 app.post('/login', async (req, res) => {
@@ -170,24 +171,42 @@ app.post('/login', async (req, res) => {
             // Extract unique subjects from attendance data
             const uniqueSubjects = [...new Set(attendanceData.map(data => data.subject))];
 
-            
             // Extract unique classes from student data
             const uniqueClasses = [...new Set(studentData.map(student => student.class))];
 
-            
-            
             // Map attendance data to include student names
-            const mappedAttendanceData = attendanceData.map(data => {
-                return {
-                    ...data.toObject(),
-                    studentName: mapSerialToStudentName(data.serialNumber),
-                    logData: data.logData,
-                    time: data.time,
-                    period: data.period,
-                    subject: data.subject,
-                    serialNumber: data.serialNumber,
-                    id: data._id.toString()
-                };
+            const mappedAttendanceData = attendanceData.map(data => ({
+                ...data.toObject(),
+                studentName: mapSerialToStudentName(data.serialNumber),
+                logData: data.logData,
+                time: data.time,
+                period: data.period,
+                subject: data.subject,
+                serialNumber: data.serialNumber,
+                id: data._id.toString()
+            }));
+
+            // Close existing change stream if it exists
+            if (userChangeStreams[username]) {
+                userChangeStreams[username].close();
+                console.log(`Closed existing change stream for user: ${username}`);
+            }
+
+            // Set up a new change stream
+            const changeStream = Attendance.watch();
+            userChangeStreams[username] = changeStream;
+
+            changeStream.on('change', (change) => {
+                if (change.operationType === 'insert') {
+                    const newAttendance = change.fullDocument;
+                    // Apply the mapping function before emitting
+                    const mappedNewAttendance = {
+                        ...newAttendance,
+                        studentName: mapSerialToStudentName(newAttendance.serialNumber)
+                    };
+                    // Emit the change only to the specific user
+                    io.to(username).emit('attendanceAdded', mappedNewAttendance);
+                }
             });
 
             // Render dashboard with attendance and student data
@@ -197,9 +216,7 @@ app.post('/login', async (req, res) => {
                 attendanceData: mappedAttendanceData, 
                 periods: uniquePeriods, 
                 subjects: uniqueSubjects,
-                student: attendanceData,
                 classes: uniqueClasses,
-                
             });
         } catch (err) {
             console.error('Error retrieving data:', err);
@@ -210,6 +227,12 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Ensure the user is joined to a specific room for real-time updates
+io.on('connection', (socket) => {
+    socket.on('join', (username) => {
+        socket.join(username);
+    });
+});
 
 
 // Define the schema for TotalClasses
@@ -382,7 +405,7 @@ app.post('/add-attendance', async (req, res) => {
   
       // Save attendance data to the specified collection
       await newAttendance.save();
-      io.emit('attendanceAdded', newAttendance); // Emit event to all clients
+      
       res.status(200).send('Attendance added successfully');
     } catch (error) {
       console.error('Error adding attendance:', error);
@@ -390,42 +413,50 @@ app.post('/add-attendance', async (req, res) => {
     }
 });
 
-  app.post('/delete-attendance', async (req, res) => {
-    const { id, username } = req.body;
-    console.log("Attempting to delete record with ID:", id); // This should log the ID
+// Assuming getModelForUser is a function that retrieves the correct model based on the username
+const getModelForUser = (username) => {
+    const user = users[username]; // Ensure you have a users object or similar structure
+    if (!user) return null;
+    const modelName = 'Attendance' + user.collection; // Assuming collections are named uniquely per user
+    if (mongoose.models[modelName]) {
+        return mongoose.models[modelName];
+    } else {
+        return mongoose.model(modelName, attendanceSchema, user.collection);
+    }
+};
 
-    
-    // Validate ID
+app.post('/delete-attendance', async (req, res) => {
+    const { id, username } = req.body;
+
+    // Validate the ID
     if (!id || !ObjectId.isValid(id)) {
         return res.status(400).json({ success: false, message: 'Invalid or missing ID' });
     }
 
-    // Determine the collection name based on the username
-    const user = users[username];
-    if (!user) {
+    // Get the model for the user
+    const AttendanceModel = getModelForUser(username);
+    if (!AttendanceModel) {
         return res.status(404).json({ success: false, message: 'User not found' });
     }
-    const collectionName = user.collection;
-
-    // Use the attendanceSchema for the model
-    // Note: Mongoose models are singular and capitalized by convention
-    // Ensure the model name is unique to avoid "OverwriteModelError"
-    const AttendanceModel = mongoose.model('Attendance' + collectionName, attendanceSchema, collectionName);
 
     try {
-        // Attempt to delete the record by ID
+        // Attempt to find and delete the attendance record
         const result = await AttendanceModel.findByIdAndDelete(id);
         if (result) {
-            io.emit('attendanceDeleted', id); // Emit event to all clients
+            // If deletion is successful, emit an event to all clients
+            io.emit('attendanceDeleted', id);
             res.json({ success: true, message: 'Record deleted successfully' });
         } else {
+            // If no record is found, send a 404 response
             res.status(404).json({ success: false, message: 'Record not found' });
         }
     } catch (error) {
+        // Log and send any server errors
         console.error('Failed to delete record:', error);
         res.status(500).json({ success: false, message: 'Failed to delete record' });
     }
 });
+
 
 app.post('/calculate-attendance-percentage', async (req, res) => {
     const { subject, totalClasses, username } = req.body;
