@@ -45,10 +45,10 @@ const transporter = nodemailer.createTransport({
 
 // Define student data with parent emails
 const studentParentData = [
-    { studentName: "Mathews A George", class: "CSES6", studentEmail: "pta21cs044@cek.ac.in", parentEmail: "mathewsgeorge2003@gmail.com" },
-    { studentName: "Ansu Rose Joseph", class: "CSES6", studentEmail: "ansurose41@gmail.com", parentEmail: "ansurose41@gmail.com" },
-    { studentName: "Keshav Umesh", class: "CSES6", studentEmail: "keshavumesh001@gmail.com", parentEmail: "keshavumesh001@gmail.com" },
-    { studentName: "Neha Sara Cherian", class: "CSES6", studentEmail: "nehacherian570@gmail.com", parentEmail: "nehacherian570@gmail.com" },
+    { studentName: "Mathews A George", class: "CSES6", studentEmail: "mathewsgeorge2003@gmail.com", parentEmail: "pta21cs044@cek.ac.in" },
+    { studentName: "Ansu Rose Joseph", class: "CSES6", studentEmail: "ansurose41@gmail.com", parentEmail: "ansurose03@gmail.com" },
+    { studentName: "Keshav Umesh", class: "CSES6", studentEmail: "keshavumesh001@gmail.com", parentEmail: "pta21cs040@cek.ac.in" },
+    { studentName: "Neha Sara Cherian", class: "CSES6", studentEmail: "nehacherian570@gmail.com", parentEmail: "pta21cs050@cek.ac.in" },
     { studentName: "Adwaith J", class: "CSES4", studentEmail: "nehacherian570@gmail.com", parentEmail: "nehacherian570@gmail.com" },
     { studentName: "Sonu Jacob Jose", class: "CSES4", studentEmail: "nehacherian570@gmail.com", parentEmail: "nehacherian570@gmail.com" }
     // { studentName: "Neha Sara Cherian", class: "CSES6", studentEmail: "nehacherian570@gmail.com", parentEmail: "nehacherian570@gmail.com" }
