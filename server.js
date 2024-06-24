@@ -743,7 +743,7 @@ app.post('/send-low-attendance-emails', async (req, res) => {
     // Define email addresses for students within the route
     const studentEmails = {
       'Mathews A George': 'mathewsgeorge2003@gmail.com',
-      'Ansu Rose Joseph': 'pta21cs044@cek.ac.in',
+      'Ansu Rose Joseph': 'ansurose03@gmail.com',
       'Keshav Umesh': 'keshavumesh001@gmail.com',
       'Neha Sara Cherian': 'nehacherian570@gmail.com',
       'Adwaith J': 'nehacherian570@gmail.com',
