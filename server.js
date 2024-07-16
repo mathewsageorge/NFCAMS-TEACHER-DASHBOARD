@@ -26,7 +26,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 // MongoDB Connection
-mongoose.connect('mongodb+srv://mathewsgeorge202:ansu@cluster0.ylyaonw.mongodb.net/NFC?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://mathewsgeorge202:#yourpassword@cluster0.ylyaonw.mongodb.net/NFC?retryWrites=true&w=majority')
 .then(() => console.log('MongoDB Connected'))
 .catch(err => console.error('MongoDB Connection Error:', err));
 
@@ -39,7 +39,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail', // For example, if you're using Gmail
   auth: {
     user: 'nfcamsofficial@gmail.com',
-    pass: 'tdrp soek zybx damz'
+    pass: 'your pass'
   }
 });
 
