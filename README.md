@@ -74,10 +74,10 @@ NFC Attendance Management System (NFCAMS) is a comprehensive solution developed 
 - **views/dashboard.ejs**: EJS template for the teacher dashboard.
 - **views/login.ejs**: EJS template for the login page.
 
-- ## Developers
+## Developers
 - **Mathews A George**
   - Role: Backend Development, Database Management
-  - GitHub: [mathewsgeorge2003](https://github.com/mathewsgeorge2003)
+  - GitHub: [mathewsgeorge2003](https://github.com/mathewsageorge)
 
 - **Ansu Rose Joseph**
   - Role: Frontend Development, User Interface Design
