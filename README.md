@@ -1,6 +1,6 @@
 # NFC Attendance Management System
 
-This project is an NFC-based attendance management system developed by Mathews A George and Ansu Rose Joseph. It allows teachers to manage student attendance, generate reports, and send notifications using a web interface.
+NFC Attendance Management System (NFCAMS) is a comprehensive solution developed by Mathews A George and Ansu Rose Joseph for automating attendance tracking in educational institutions. The system leverages NFC (Near Field Communication) technology to streamline the process of marking student attendance. It includes a server-side component for data management and a client-side web interface for teachers to interact with.It allows teachers to manage student attendance, generate reports, and send notifications using a web interface.
 
 ## Table of Contents
 
@@ -19,6 +19,12 @@ This project is an NFC-based attendance management system developed by Mathews A
 - **Messaging**: Send messages to students and parents.
 - **Low Attendance Alerts**: Notify students with low attendance via email.
 - **User Authentication**: Secure login for teachers.
+- **NFC Tag Integration**: Teachers can use NFC tags to quickly mark student attendance by tapping the tags.
+- **Dynamic Subject Selection**: The system allows teachers to select subjects based on the teacher's profile, ensuring accurate attendance tracking.
+- **Class Management**: Teachers can start classes, increment class counts, and receive absence notifications for students who are marked absent.
+- **Email Notifications**: Absentees are automatically notified via email, providing a seamless communication channel.
+- **Database Integration**: Utilizes MongoDB for storing attendance records and class information securely.
+- **User-Friendly Interface**: The web interface offers an intuitive design for easy navigation and interaction.
 
 ## Installation
 
@@ -67,6 +73,15 @@ This project is an NFC-based attendance management system developed by Mathews A
 - **server.js**: Main server file that sets up the Express server, connects to MongoDB, and defines routes.
 - **views/dashboard.ejs**: EJS template for the teacher dashboard.
 - **views/login.ejs**: EJS template for the login page.
+
+- ## Developers
+- **Mathews A George**
+  - Role: Backend Development, Database Management
+  - GitHub: [mathewsgeorge2003](https://github.com/mathewsgeorge2003)
+
+- **Ansu Rose Joseph**
+  - Role: Frontend Development, User Interface Design
+  - GitHub: [ansurose41](https://github.com/ansurose41)
 
 ## Contributing
 
